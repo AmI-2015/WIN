@@ -1,3 +1,3 @@
 # WIN
 
-Website for the WIN (WC Info) Project.
+Website for the WIN (Wc INfo) Project.
