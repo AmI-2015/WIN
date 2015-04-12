@@ -867,14 +867,5 @@ body {
 }
 
 ol.nested-count { 
-    counter-reset: item;
-}
-
-ol.nested-count li { 
-    display: block;
-}
-
-ol.nested-count li:before { 
-    content: counters(item, ".") " "; 
-    counter-increment: item; 
+    list-style: none;
 }
