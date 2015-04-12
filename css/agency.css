@@ -865,3 +865,16 @@ img::-moz-selection {
 body {
     webkit-tap-highlight-color: #09c53e;
 }
+
+ol.nested-count { 
+    counter-reset: item;
+}
+
+ol.nested-count li { 
+    display: block;
+}
+
+ol.nested-count li:before { 
+    content: counters(item, ".") " "; 
+    counter-increment: item; 
+}
