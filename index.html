@@ -525,27 +525,58 @@
                             		<dd>a public lavatory with sinks and toilets located in universities</dd>
                             	<dt>Toilet</dt>
                             		<dd>a WC inside a Restroom.</dd>
+                                <dt>Opened/Closed</dt>
+                                    <dd>States if the whole restroom is available to users or not</dd>
+                                <dt>In/Not in service</dt>
+                                    <dd>States if a single toilet is available to users or not</dd>
+                                <dt>Point of interest</dt>
+                                    <dd>A specific location inside Politecnico (e.g. classrooms, bars) well known by users.</dd>
+
                             </dl>
                             
                             <h3>Functional Requirements</h3>
                             
                             <h4><em>Area 1:</em> Queue</h4>
                             
-                            <ol class="nested-count">
-                            	<li><span>1.1</span> The user must be able to know where is the less crowded and closest restroom. (5)*</li>
-                            	<li><span>1.2</span> The user must be able to know how many people are in the restroom. (5)*</li>
-				<li><span>1.3</span> The user must be able to know how much time, in average, he has to wait for using the toilet. (5)*</li>
+                            <ol>
+                            	<li>The user must be able to know where is the less crowded and closest restroom. (1)*</li>
+                            	<li>The user must be able to know how many people are in the restroom. (1)*</li>
+				                <li>The user must be able to know how much time, in average, he has to wait for using the toilet. (2)*</li>
                             </ol>
                             
                             <h4><em>Area 2:</em> Service</h4>
                             
-                            <ol class="nested-count">
-                            	<li><span>2.1</span> The user must be able to know whether the restroom is opened or closed. (3)*</li>
-                            	<li><span>2.2</span> The user must be able to know whether the toilet is in service or not. (2)*</li>
+                            <ol>
+                            	<li>The user must be able to know whether the restroom is opened or closed. (2)*</li>
+                            	<li>The user must be able to know whether the toilet is in service or not. (4)*</li>
+                            </ol>
+                            
+                            <h4><em>Area 3:</em> User Interface</h4>
+                            
+                            <ol>
+                                <li>The user must select where he wants to find a restroom from a list of points of interest. (1)*
+</li>
+                                <li>The user must choose a sex to filter available restrooms. (1)*</li>
+                                <li>Each restroom must provide information to users about its status. (2)*</li>
+                                <li>Each restroom should provide information to users about the closest restrooms. (5)*</li>
+                            </ol>
+                            
+                            <h4><em>Area 4:</em> Cleaning staff interaction</h4>
+                            
+                            <ol>
+                                <li>Each restroom switch is used to change restroom status (opened/closed).</li>
+                                <li>The switch must provide visual feedback to the cleaning staff about restroom status.</li>
+                            </ol>
+                            
+                            <h4><em>Area 5:</em> Sensors</h4>
+                            
+                            <ol>
+                                <li>Each restroom entrance is equipped with a bi-directional people counter sensor which counts how many people enter or exit.</li>
+                                <li>In each restroom there is a switch usable only by the cleaning staff.</li>
                             </ol>
                             
                             <p>(*) The number in parentheses means the priority level of each requirement. 
-        			The priority range goes from 1 (low priority) to 5 (max priority).</p>
+        			           The priority range goes from 1 (max priority) to 5 (min priority).</p>
         			
         		    <h3>Non-Functional Requirements</h3>
         		    
@@ -556,6 +587,7 @@
         		    	<li>The web interface will be responsive, and will adapt to screen resolutions from 480x320 to 1920x1080.</li>
         		    	<li>The system will be localized in many languages (default: English).</li>
         		    	<li>The system should work, in reduced conditions, even if the local system of a restroom breaks.</li>
+                        <li>Data computed by the system must be stored persistently.</li>
         		    	<li>The system guarantees user privacy.</li>
         		    	<li>The system should be user-friendly.</li>
         		    </ol>
