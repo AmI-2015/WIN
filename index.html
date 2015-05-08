@@ -583,7 +583,114 @@
                         <div class="modal-body">
                             <!-- Project Details Go Here -->
                             <h2>System Architecture</h2>
-                            <p class="item-intro text-muted">Coming Soon</p>
+                            <p class="item-intro text-muted">Deliverable 3</p>
+                            
+                            <h3>1. System Architecture</h3>
+                            
+                            <img src="img/system-architecture.jpg" alt="System Architecture" />
+                            
+                            <h4>1.1 HW Architecture</h4>
+                            <ul>Computational nodes:
+                                <li>Central server (data storage, web UI provider, intelligence):
+                                    <ul>
+                                        <li>Anywhere in the web, always-on system.</li>
+                                    </ul>
+                                </li>
+                                <li>Local gateway (Raspberry Pi) for integrating sensor data</li>
+                                    <ul>
+                                        <li>one for each restroom</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <ul>Devices:
+                                <li>Video camera above the main entrance of each restroom to analyse people’s flow thanks to a dedicated software.</li>
+                            </ul>
+                            <ul>User interface devices:
+                                <li>Monitors (which give to the user useful information about the status of restrooms):
+                                    <ul>
+                                        <li>one monitor outside each restroom. </li>
+                                    </ul>
+                                </li>
+                                <li>Color-changing lighting system (which give to the user useful information about the status of restrooms):
+                                    <ul>
+                                        <li>one lighting system outside each restroom. </li>
+                                    </ul>
+                                </li> 
+                                <li>witch that allows the cleaning staff to set the availability of a specific restroom:
+                                    <ul>
+                                        <li>one inside each restroom.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+
+                            <h4>1.2 SW Architecture</h4>
+                            <ul>
+                                <li>Sensor data collection software (on local gateway):
+                                    <ul>
+                                        <li>Processes and sends data to central server (FR 5.1, FR 5.2).</li>
+                                    </ul>
+                                </li>
+                                <li>Software for counting how many people are in the restroom (on local gateway) (FR 5.1)</li>
+                                <li>Web Application (on central server):
+                                    <ul>
+                                        <li>Provides the user information about restrooms. (FR 1.1)</li>
+                                        <li>User can find nearby restrooms by choosing a point of interest. (FR 1.2)</li>
+                                        <li>Analytics and Statistics. (FR 1.3)</li>
+                                    </ul>
+                                </li>
+                                <li>Data Storage (on central server):
+                                    <ul>
+                                        <li>Store data for each restroom. (NFR 6)</li>
+                                    </ul>
+                                </li>
+                                <li>Intelligent Core (on central server):
+                                    <ul>
+                                        <li>Analyses data and provides information to users (FR Area 1).</li>
+                                    </ul>
+                                </li>
+                                <li>Graphical server for the monitor (runned by OS on local gateway). (FR 3.3, FR 3.4)</li>
+                            </ul>
+
+
+                            <h4>1.3 Network Architecture</h4>
+                            <ul>
+                                <li>Local gateway (Raspberry Pi) in each restroom, connected via LAN to the Internet.</li>
+                                <li>Central server: world-accessible public IP address.</li>
+                                <li>Video camera and switch connected to the local gateway via LAN.</li>
+                                <li>Monitors connected to local gateway.</li>
+                            </ul>
+
+
+                            <h3>2. Selected components</h3>
+                        
+                            <h4>2.1 Hardware components</h4>
+                                <h5>2.1.1 Off-the-Shelf</h5>
+                                <ul>
+                                    <li>Raspberry Pi board</li>
+                                    <li>Video camera</li>
+                                    <li>Monitor (size from 15’ to 24’)</li>
+                                    <li>Color-changing lighting system (Philips Hue)</li>
+                                    <li>Switch for cleaning staff</li>
+                                </ul>
+
+
+                            <h4>2.2 Software components</h4>
+                            <ul>
+                                <li>Linux OS running on central server (Ubuntu).</li>
+                                <li>Linux OS running on Raspberry Pi.</li>
+                                <li>Web server (Flask)</li>
+                                <li>DB server (MySQL)</li>
+                                <li>Video recognition/Computer vision for video camera</li>
+                            </ul>
+
+                            <h3>Open Issues</h3>
+                            <ul>
+                                <li>Verify if video camera’s people tracking software system requirements are compatible with Raspberry Pi</li>
+                                <li>Check local gateway performance</li>
+                                <li>Define data updating frequency.</li>
+                            </ul>
+
                             <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close Doc</button>
                         </div>
                     </div>
