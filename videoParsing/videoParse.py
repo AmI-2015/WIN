@@ -1,7 +1,7 @@
 #Install BeautifulSoup and lxml
 
 from bs4 import BeautifulSoup
-#from database import DB
+from database import DB
 import time
 
 address = "http://IP:30003/gateflow.cgi?action=total&id=ID&direction=DIRECTION&begin=BEGIN&end=END&fromReset=value"
@@ -23,5 +23,7 @@ while(True):
             print "OUT %s" %(outCount)
     
     peopleIN = inCount - outCount
+    
+    updateRestroomPeopleCount(ID, peopleIN)
     
     time.sleep(5)
