@@ -19,3 +19,5 @@ for item in items:
     else:
         outCount = item['total']
         print "OUT %s" %(outCount)
+        
+peopleIN = inCount - outCount
