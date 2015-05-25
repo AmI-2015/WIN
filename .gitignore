@@ -1,2 +1,8 @@
 *~
-.pyc
+*.pyc
+
+.metadata
+.project
+.pydevproject
+.metadata/
+

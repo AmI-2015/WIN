@@ -13,16 +13,19 @@ configParser = ConfigParser.RawConfigParser()
 # Prepared statements
 stmt_placeID = "SELECT `id`, `name`, `type` FROM `place` WHERE `id` = %s"
 stmt_placeName = "SELECT `id`, `name`, `type` FROM `place` WHERE `name` = %s"
-stmt_placeType = "SELECT `id`, `name`, `type` FROM `place` WHERE `type` = %s"
+stmt_placeType = "SELECT `id`, `name` FROM `place` WHERE `type` = %s ORDER BY `name` ASC"
+stmt_placeTypeList = "SELECT DISTINCT `type` FROM `place`"
 
 stmt_restroomID = "SELECT `id`, `people_count`, `wc_count`, `status`, `wc_closed_count` FROM `restroom` WHERE `id` = %s"
-stmt_restroomUpdate = "UPDATE `restroom` SET `people_count` = %s WHERE `id` = %s"
+stmt_restroomUpdatePeopleCount = "UPDATE `restroom` SET `people_count` = %s WHERE `id` = %s"
+stmt_restroomUpdateStatus = "UPDATE `restroom` SET `status` = %s WHERE `id` = %s"
 
 #stmt_distanceRestroomFromPlace = "SELECT `priority` FROM `distance` WHERE `restroom` = %s AND `place` = %s"
 stmt_distanceRestroomList = "SELECT `restroom`, `priority` FROM `distance` WHERE `place` = %s"
 
 
 class Database(object):
+    types = []
 
     def __init__(self, cfgFilename):
         """Create a DB object.
@@ -34,9 +37,22 @@ class Database(object):
         host = configParser.get('Database', 'host')
         database = configParser.get('Database', 'database')
         self.conn = mysql.connector.connect(user=user, password=password, host=host, database=database)
+        
+        self.loadInitialData();
     
     def close(self):
         self.conn.close()
+
+    def loadInitialData(self):
+        cur = self.conn.cursor()
+        # fetch available types
+        cur.execute(stmt_placeTypeList)
+        r = cur.fetchall()
+        for row in r:
+            self.types.append(row[0])
+        cur.close()
+        
+        print self.types
 
     """
     Place queries
@@ -75,6 +91,9 @@ class Database(object):
         #places = []
         # TODO for row in r:
         return r # {'id': r[0], 'name': r[1], 'type': r[2]}
+    
+    def getPlaceTypes(self):
+        return self.types
 
     """
     Restrooom queries
@@ -97,7 +116,16 @@ class Database(object):
             raise TypeError("argument must be of int type")
 
         cur = self.conn.cursor()
-        cur.execute(stmt_restroomUpdate, (newCount, restroomID))
+        cur.execute(stmt_restroomUpdatePeopleCount, (newCount, restroomID))
+        self.conn.commit()
+        cur.close()
+
+    def updateRestroomStatus(self, restroomID, status):
+        if (isinstance(restroomID, int) == False) or (isinstance(restroomID, int) == False):
+            raise TypeError("argument must be of int type")
+
+        cur = self.conn.cursor()
+        cur.execute(stmt_restroomUpdateStatus, (status, restroomID))
         self.conn.commit()
         cur.close()
 
