@@ -1,0 +1,17 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col-lg-12 text-center">
+			<h1>WIN - Wc Info</h1>	
+			<nav>
+  			<ul class="pager">
+  				<a class="btn btn-default" href={{ url_for ('typeRoom', sex="boy") }} role="button">Boy</a>
+  				<a class="btn btn-default" href={{ url_for ('typeRoom', sex="girl") }} role="button">Girl</a>
+  			</ul>
+  		</nav>
+		</div>
+	</div>
+</div>
+{% endblock %}

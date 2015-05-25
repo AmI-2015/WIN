@@ -1,0 +1,85 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block content %}
+<div class="row">
+	<div class="col-md-4">
+		<a href={{ url_for ('typeRoom', sex=sex) }}>
+			<button type="button" class="btn btn-default" aria-label="Left Align">
+  				<span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+			</button>
+		</a>
+	</div>
+	<div class="col-md-4">
+		<h1>WIN - Wc Info</h1>
+	</div>
+	<div class="col-md-4"></div>
+</div>
+{% endblock %}
+
+
+ 
+//usare database...
+
+
+{% if type=="room": %}
+{% block content2 %} //content2 non esiste!
+	<div>
+		<div class="col-md-4"></div>
+		<div class="col-md-4">
+			<h3>Select the type of room closest to you</h3>
+			<div class="dropdown">
+  			<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+    			Number of Room
+   		 		<span class="caret"></span>
+  			</button>
+  			<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+    			<li role="presentation"><a role="menuitem" tabindex="-1" href={{ url_for('restroomTable', number=1) }}>1</a></li>
+    			<li role="presentation"><a role="menuitem" tabindex="-1" href={{ url_for('restroomTable', number=2) }}>2</a></li>
+   				<li role="presentation"><a role="menuitem" tabindex="-1" href={{ url_for('restroomTable', number=3) }}>3</a></li>
+  			</ul>
+			</div>
+		</div>
+	</div>
+	
+{% endblock %}	
+{% elif type=="computerlab": %}
+{% block content3 %}
+	<div>
+		<div class="col-md-4"></div>
+		<div class="col-md-4">
+			<h3>Select the type of room closest to you</h3>
+			<div class="dropdown">
+  			<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+    			Number of Lab
+   		 		<span class="caret"></span>
+  			</button>
+  			<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+    			<li role="presentation"><a role="menuitem" tabindex="-1" href={{ url_for('restroomTable',  sex=sex, type="room", number=1) }}>1D</a></li>
+    			<li role="presentation"><a role="menuitem" tabindex="-1" href={{ url_for('restroomTable',  sex=sex, type="room", number=2) }}>2D</a></li>
+   				<li role="presentation"><a role="menuitem" tabindex="-1" href={{ url_for('restroomTable',  sex=sex, type="room", number=3) }}>3D</a></li>
+  			</ul>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+{% else %}
+{% block content4 %}
+	<div>
+		<div class="col-md-4"></div>
+		<div class="col-md-4">
+			<h3>Select the type of room closest to you</h3>
+			<div class="dropdown">
+  			<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+    			Bar's name
+   		 		<span class="caret"></span>
+  			</button>
+  			<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+    			<li role="presentation"><a role="menuitem" tabindex="-1" href={{ url_for('restroomTable',  sex=sex, type="room", number=1) }}>Katia</a></li>
+    			<li role="presentation"><a role="menuitem" tabindex="-1" href={{ url_for('restroomTable',  sex=sex, type="room", number=2) }}>Ambrogio</a></li>
+  			</ul>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
+{% endif %}
