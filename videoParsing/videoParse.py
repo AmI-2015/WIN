@@ -9,7 +9,7 @@ address = "http://IP:30003/gateflow.cgi?action=total&id=ID&direction=DIRECTION&b
 
 while(True):
     markup = BeautifulSoup(open(address), "xml")
-    #markup = BeautifulSoup(markupTest), "xml")
+    #markup = BeautifulSoup(addressTest, "xml")
 
     items = markup.find_all('item')
 
