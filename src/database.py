@@ -15,7 +15,8 @@ stmt_placeID = "SELECT `id`, `name`, `type` FROM `place` WHERE `id` = %s"
 stmt_placeName = "SELECT `id`, `name`, `type` FROM `place` WHERE `name` = %s"
 stmt_placeType = "SELECT `id`, `name`, `type` FROM `place` WHERE `type` = %s"
 
-stmt_restroomID = "SELECT `id`, `people_count`, `wc_count`, `status`, `wc_closed_count` FROM place WHERE `id` = %s"
+stmt_restroomID = "SELECT `id`, `people_count`, `wc_count`, `status`, `wc_closed_count` FROM `restroom` WHERE `id` = %s"
+stmt_restroomUpdate = "UPDATE `restroom` SET `people_count` = %s WHERE `id` = %s"
 
 #stmt_distanceRestroomFromPlace = "SELECT `priority` FROM `distance` WHERE `restroom` = %s AND `place` = %s"
 stmt_distanceRestroomList = "SELECT `restroom`, `priority` FROM `distance` WHERE `place` = %s"
@@ -90,6 +91,15 @@ class Database(object):
         cur.close()
         
         return {'id': r[0], 'peopleCount': r[1], 'wcCount': r[2], 'status': r[3], 'wcClosedCount': r[4]}
+    
+    def updateRestroomPeopleCount(self, restroomID, newCount):
+        if isinstance(restroomID, int) == False:
+            raise TypeError("argument must be of int type")
+
+        cur = self.conn.cursor()
+        cur.execute(stmt_restroomUpdate, (newCount, restroomID))
+        self.conn.commit()
+        cur.close()
 
     """
     Distance queries
