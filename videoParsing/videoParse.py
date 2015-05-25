@@ -14,7 +14,6 @@ while(True):
 
     items = markup.find_all('item')
 
-<<<<<<< HEAD
     for item in items:
         if item['direction'] == "IN":
             inCount = item['total']
@@ -22,16 +21,7 @@ while(True):
         else:
             outCount = item['total']
             print "OUT %s" %(outCount)
-            
+    
+    peopleIN = inCount - outCount
+    
     time.sleep(5)
-=======
-for item in items:
-    if item['direction'] == "IN":
-        inCount = item['total']
-        print "IN %s" %(inCount)
-    else:
-        outCount = item['total']
-        print "OUT %s" %(outCount)
-        
-peopleIN = inCount - outCount
->>>>>>> 6aa8da1d970e4430c2b6dba8f3c4eeef60d16076
