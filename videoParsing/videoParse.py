@@ -5,12 +5,11 @@ from database import DB
 import time
 
 address = "http://IP:30003/gateflow.cgi?action=total&id=ID&direction=DIRECTION&begin=BEGIN&end=END&fromReset=value"
+#addressTest = '<total><item total="34" direction="IN" id="0" /><item total="117" direction="OUT" id="0" /></total>'
 
 while(True):
     markup = BeautifulSoup(open(address), "xml")
-
-    #addressTest = '<total><item total="34" direction="IN" id="0" /><item total="117" direction="OUT" id="0" /></total>'
-    #file = BeautifulSoup(markupTest), "xml")
+    #markup = BeautifulSoup(markupTest), "xml")
 
     items = markup.find_all('item')
 
