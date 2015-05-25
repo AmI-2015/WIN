@@ -17,6 +17,8 @@ def test():
     print DB.getPlaceInfobyName('Studyroom nord')
     
     print DB.getPlaceInfobyType('restroom')
+    
+    DB.updateRestroomPeopleCount(3, 4)
 
     DB.close()
 
