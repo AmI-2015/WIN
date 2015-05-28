@@ -20,6 +20,8 @@ def test():
     
     DB.updateRestroomPeopleCount(3, 4)
 
+    print DB.types
+
     DB.close()
 
 

@@ -25,6 +25,7 @@ stmt_distanceRestroomList = "SELECT `restroom`, `priority` FROM `distance` WHERE
 
 
 class Database(object):
+    """ String list of place types available """
     types = []
 
     def __init__(self, cfgFilename):
@@ -51,8 +52,6 @@ class Database(object):
         for row in r:
             self.types.append(row[0])
         cur.close()
-        
-        print self.types
 
     """
     Place queries
@@ -64,23 +63,30 @@ class Database(object):
         cur = self.conn.cursor()
         cur.execute(stmt_placeID, (placeID,))
         r = cur.fetchone()
-        if r == None:
-            print 'Warning: getPlaceInfobyID no entry found for place ID "' + str(placeID) + '"' 
         cur.close()
-        
+
+        if r == None:
+            print 'Warning: getPlaceInfobyID no entry found for place ID "' + str(placeID) + '"'
+            return None
+
         return {'id': r[0], 'name': r[1], 'type': r[2]}
     
     def getPlaceInfobyName(self, name):
         cur = self.conn.cursor()
         cur.execute(stmt_placeName, (name,))
         r = cur.fetchone()
+        cur.close()
+
         if r == None:
             print 'Warning: getPlaceInfobyName no entry found for name "' + name + '"'
-        cur.close()
+            return None
         
         return {'id': r[0], 'name': r[1], 'type': r[2]}
     
     def getPlaceInfobyType(self, typestr):
+        """ Return a list of places as dictionary { id: 'id', name: 'name' }
+        (id, name, type)
+        """
         cur = self.conn.cursor()
         cur.execute(stmt_placeType, (typestr,))
         r = cur.fetchall()
@@ -88,11 +94,13 @@ class Database(object):
             print 'Warning: getPlaceInfobyType no entry found for type "' + typestr + '"'
         cur.close()
         
-        #places = []
-        # TODO for row in r:
-        return r # {'id': r[0], 'name': r[1], 'type': r[2]}
+        places = []
+        for item in r:
+            places.append({'id': item[0], 'name': item[1]})
+        return places
     
     def getPlaceTypes(self):
+        """Return a list of place types available"""
         return self.types
 
     """
@@ -105,9 +113,11 @@ class Database(object):
         cur = self.conn.cursor()
         cur.execute(stmt_restroomID, (restroomID,))
         r = cur.fetchone()
+        cur.close()
+
         if r == None:
             print 'Warning: getRestroomInfobyID no entry found for restroom ID "' + str(restroomID) + '"'
-        cur.close()
+            return None
         
         return {'id': r[0], 'peopleCount': r[1], 'wcCount': r[2], 'status': r[3], 'wcClosedCount': r[4]}
     
