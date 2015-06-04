@@ -23,13 +23,13 @@
           <div class="col-md-4">
           <div class="radio">
             <label for="gender-0">
-              <input type="radio" name="gender" id="gender-0" value="1" checked="checked">
+              <input type="radio" name="gender" id="gender-0" value="F" checked="checked">
               Female
             </label>
             </div>
           <div class="radio">
             <label for="gender-1">
-              <input type="radio" name="gender" id="gender-1" value="2">
+              <input type="radio" name="gender" id="gender-1" value="M">
               Male
             </label>
             </div>
@@ -44,7 +44,8 @@
 				<select id="typeofroom" name="typeofroom" class="form-control">
 					<option value disabled selected>-- select an option --</option>
 					{% for type in types %}
-					<option value="{{ type }}">{{ type }}</option> {% endfor %}
+					<option value="{{ type }}">{{ type }}</option>
+					{% endfor %}
 				</select>
 			</div>
 		</div>

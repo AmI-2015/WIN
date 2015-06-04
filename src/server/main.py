@@ -32,11 +32,11 @@ def restroomTable(sex,type,number):
 
 @app.route('/placeType/<string:placeType>/')
 def placeType(placeType):
-    return jsonify(rooms=DB.getPlaceInfobyType(placeType))
+    return jsonify(rooms=DB.getPlaceInfoByType(placeType))
 
-@app.route('/place/<int:placeId>')
+@app.route('/place/<int:placeId>/')
 def nearRoom(placeId):
-    info = DB.getPlaceInfobyID(placeId)
+    info = DB.getPlaceInfoByID(placeId)
     if info == None:
         abort(404)
     return render_template('place.html', name=info['name'], type=info['type'])
