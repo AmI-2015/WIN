@@ -4,6 +4,7 @@ $(document).ready(function() {
 	});
 
 	$("#typeofroom").change(function() {
+        $("#selectRoomForm").css("display", "block");
 		$.getJSON("/placeType/"+ $("#typeofroom").val(), function(result) {
 			var select = $("#selectroom");
 			select.empty();
@@ -20,10 +21,6 @@ $(document).ready(function() {
 			window.location = "/place/" + $("#selectroom").val() + "/";
 		}
 	});
-    
-    $("#typeofroom").change(function() {
-        $("#selectRoomForm").css("display", "block");
-    });
     
     $("#selectroom").change(function() {
         $("#findForm").css("display", "block");
