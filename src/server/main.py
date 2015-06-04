@@ -41,5 +41,13 @@ def nearRoom(placeId):
         abort(404)
     return render_template('place.html', name=info['name'], type=info['type'])
 
+@app.route('/about')
+def index():
+    return render_template('about.html')
+
+@app.route('/contact')
+def index():
+    return render_template('contact.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
