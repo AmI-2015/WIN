@@ -23,6 +23,6 @@ while(True):
     
     peopleIN = inCount - outCount
     
-    updateRestroomPeopleCount(ID, peopleIN)
+    DB.updateRestroomPeopleCount(ID, peopleIN)
     
     time.sleep(5)

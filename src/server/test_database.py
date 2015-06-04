@@ -7,20 +7,22 @@ Created on 24/mag/2015
 from database import DB
 
 
-
 def test():
-    print DB.getPlaceInfobyID(1)
+    print DB.getPlaceInfoByID(1)
 
-    class12 = DB.getPlaceInfobyName('Classroom 12')
-    print class12['name'], class12['type']
+    class12 = DB.getPlaceInfoByName('Classroom 12')
+    print class12['id'], class12['name'], class12['type']
 
-    print DB.getPlaceInfobyName('Studyroom nord')
+    print DB.getPlaceInfoByName('Studyroom nord')
     
-    print DB.getPlaceInfobyType('restroom')
+    print DB.getPlaceInfoByType('restroom')
     
     DB.updateRestroomPeopleCount(3, 4)
 
     print DB.types
+    
+    print DB.getPriorityListFromPlace(class12['id'])
+    print DB.getPriorityListFromPlaceFilterGender(class12['id'], 'M')
 
     DB.close()
 

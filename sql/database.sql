@@ -17,25 +17,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `restroom`
---
--- lo 0 in status indica bagno aperto
--- wc_count indica il numero di toilet in quel bagno
-
-DROP TABLE IF EXISTS `restroom`;
-CREATE TABLE `restroom` (
-  `id` int(11) NOT NULL,
-  `people_count` int(11) NOT NULL DEFAULT 0,
-  `wc_count` int(11) NOT NULL,
-  `gender` char(2), NOT NULL,
-  `status` int(11) DEFAULT 0,  
-  `wc_closed_count` int(11) DEFAULT 0,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Struttura della tabella `distance`
 --
 
@@ -46,6 +27,27 @@ CREATE TABLE `distance` (
   `priority` int(11) NOT NULL,
   PRIMARY KEY (`restroom`,`place`),
   KEY `place` (`place`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `restroom`
+--
+-- lo 0 in status indica bagno aperto
+-- wc_count indica il numero di toilet in quel bagno
+
+DROP TABLE IF EXISTS `restroom`;
+CREATE TABLE `restroom` (
+  `id` int(11) NOT NULL,
+  `people_count` int(11) NOT NULL DEFAULT 0,
+  `wc_count` int(11) NOT NULL,
+  `gender` char(2) NOT NULL,
+  `status` int(11) DEFAULT 0,  
+  `wc_closed_count` int(11) DEFAULT 0,
+  `lat` double NOT NULL,
+  `long` double NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------

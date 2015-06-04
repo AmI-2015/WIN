@@ -21,7 +21,8 @@ stmt_restroomUpdatePeopleCount = "UPDATE `restroom` SET `people_count` = %s WHER
 stmt_restroomUpdateStatus = "UPDATE `restroom` SET `status` = %s WHERE `id` = %s"
 
 #stmt_distanceRestroomFromPlace = "SELECT `priority` FROM `distance` WHERE `restroom` = %s AND `place` = %s"
-stmt_distanceRestroomList = "SELECT `restroom`, `priority` FROM `distance` WHERE `place` = %s"
+stmt_distanceRestroomList = "SELECT `restroom`, `priority` FROM `distance` WHERE `place` = %s ORDER BY `priority` ASC"
+stmt_distanceRestroomListFilterGender = "SELECT `restroom`, `priority` FROM `distance`, `restroom` WHERE `place` = %s AND `gender` = %s ORDER BY `priority` ASC"
 
 
 class Database(object):
@@ -56,7 +57,7 @@ class Database(object):
     """
     Place queries
     """
-    def getPlaceInfobyID(self, placeID):
+    def getPlaceInfoByID(self, placeID):
         if isinstance(placeID, int) == False:
             raise TypeError("argument must be of int type")
 
@@ -66,24 +67,24 @@ class Database(object):
         cur.close()
 
         if r == None:
-            print 'Warning: getPlaceInfobyID no entry found for place ID "' + str(placeID) + '"'
+            print "Warning: getPlaceInfobyID no entry found for place ID '%s'" %(str(placeID))
             return None
 
         return {'id': r[0], 'name': r[1], 'type': r[2]}
     
-    def getPlaceInfobyName(self, name):
+    def getPlaceInfoByName(self, name):
         cur = self.conn.cursor()
         cur.execute(stmt_placeName, (name,))
         r = cur.fetchone()
         cur.close()
 
         if r == None:
-            print 'Warning: getPlaceInfobyName no entry found for name "' + name + '"'
+            print "Warning: getPlaceInfobyName no entry found for '%s'" %(name)
             return None
         
         return {'id': r[0], 'name': r[1], 'type': r[2]}
     
-    def getPlaceInfobyType(self, typestr):
+    def getPlaceInfoByType(self, typestr):
         """ Return a list of places as dictionary { id: 'id', name: 'name' }
         (id, name, type)
         """
@@ -91,7 +92,7 @@ class Database(object):
         cur.execute(stmt_placeType, (typestr,))
         r = cur.fetchall()
         if len(r) == 0:
-            print 'Warning: getPlaceInfobyType no entry found for type "' + typestr + '"'
+            print "Warning: getPlaceInfobyType no entry found for type '%s'" %(typestr)
         cur.close()
         
         places = []
@@ -106,7 +107,7 @@ class Database(object):
     """
     Restrooom queries
     """
-    def getRestroomInfobyID(self, restroomID):
+    def getRestroomInfoByID(self, restroomID):
         if isinstance(restroomID, int) == False:
             raise TypeError("argument must be of int type")
 
@@ -116,7 +117,7 @@ class Database(object):
         cur.close()
 
         if r == None:
-            print 'Warning: getRestroomInfobyID no entry found for restroom ID "' + str(restroomID) + '"'
+            print "Warning: getRestroomInfobyID no entry found for restroom ID '%s'" %(str(restroomID))
             return None
         
         return {'id': r[0], 'peopleCount': r[1], 'wcCount': r[2], 'status': r[3], 'wcClosedCount': r[4]}
@@ -147,14 +148,28 @@ class Database(object):
             raise TypeError("argument must be of int type")
 
         cur = self.conn.cursor()
-        cur.execute(stmt_restroomID, (placeID,))
+        cur.execute(stmt_distanceRestroomList, (placeID,))
         r = cur.fetchall()
         if len(r) == 0:
-            print 'Warning: getPriorityListFromPlace no entry found for place ID "' + str(placeID) + '"' 
+            print "Warning: getPriorityListFromPlace no entry found for place ID '%s'" %(str(placeID)) 
         cur.close()
         
         return r
     
+    def getPriorityListFromPlaceFilterGender(self, placeID, gender):
+        if isinstance(placeID, int) == False:
+            raise TypeError("argument must be of int type")
+
+        cur = self.conn.cursor()
+        cur.execute(stmt_distanceRestroomListFilterGender, (placeID, gender))
+        r = cur.fetchall()
+        if len(r) == 0:
+            print "Warning: getPriorityListFromPlace no entry found for place ID '%s' and gender '%s'" %(str(placeID),gender) 
+        cur.close()
+        
+        return r
+
+
 """ Instance of Database class to be used.
 Avoid creating other instances of the class, otherwise each class will create a new connection!
 """

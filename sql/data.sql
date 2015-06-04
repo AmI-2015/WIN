@@ -1,4 +1,8 @@
+DELETE FROM `distance` WHERE `restroom` >= 1;
+DELETE FROM `restroom` WHERE `id` >= 1;
 DELETE FROM `place` WHERE `id` >= 1;
+
+
 INSERT INTO `place` (`id`, `name`, `typeit`,`type`) VALUES
 (1, '1','Aula', 'Classroom' ),
 (2, '2','Aula', 'Classroom' ),
@@ -40,8 +44,20 @@ INSERT INTO `place` (`id`, `name`, `typeit`,`type`) VALUES
 (38, 'Restroom near Celid','Bagno', 'Restroom' ),
 (39, 'Restroom near Celid','Bagno', 'Restroom' );
 
+INSERT INTO `restroom` (`id`, `wc_count`,`gender`,`lat`,`long`) VALUES
+(28,2,'M',45.06444,7.66220),
+(29,2,'F',45.06444,7.66220),
+(30,5,'M',45.06410,7.66208),
+(31,4,'F',45.06410,7.66208),
+(32,2,'M',45.06208,7.66076),
+(33,2,'F',45.06208,7.66076),
+(34,4,'M',45.06224,7.66097),
+(35,3,'F',45.06224,7.66097),
+(36,2,'M',45.06239,7.66203),
+(37,1,'F',45.06239,7.66203),
+(38,5,'M',45.06296,7.66236),
+(39,2,'F',45.06296,7.66236);
 
-DELETE FROM `distance` WHERE `restroom` >= 1;
 INSERT INTO `distance` (`restroom`, `place`, `priority`) VALUES
 (28,1,6),
 (29,1,6),
@@ -498,20 +514,5 @@ INSERT INTO `distance` (`restroom`, `place`, `priority`) VALUES
 (35,39,4),
 (36,39,2),
 (37,39,2),
-(38,39,1),
-
-DELETE FROM `restroom` WHERE `id` >= 1;
-INSERT INTO `restroom` (`id`, `wc_count`,`gender`) VALUES
-(28,2,"M")
-(29,0,"F")
-(30,0,"M")
-(31,0,"F")
-(32,2,"M")
-(33,0,"F")
-(34,0,"M")
-(35,0,"F")
-(36,2,"M")
-(37,0,"F")
-(38,0,"M")
-(39,0,"F")
+(38,39,1);
 

@@ -2,6 +2,7 @@ $(document).ready(function() {
 	$("#typeofroom").load(function() {
 		$("#typeofroom").change()
 	});
+
 	$("#typeofroom").change(function() {
 		$.getJSON("/placeType/"+ $("#typeofroom").val(), function(result) {
 			var select = $("#selectroom");
@@ -14,7 +15,10 @@ $(document).ready(function() {
 	});
 
 	$("#find").click(function() {
-		window.location = "/place/" + $("#selectroom").val();
+		var id = $("#selectroom").val();
+		if (id !== null) {
+			window.location = "/place/" + $("#selectroom").val() + "/";
+		}
 	});
     
     $("#typeofroom").change(function() {
@@ -24,5 +28,6 @@ $(document).ready(function() {
     $("#selectroom").change(function() {
         $("#findForm").css("display", "block");
     });
-    
+
 });
+
