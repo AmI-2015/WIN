@@ -1,10 +1,19 @@
 {% extends 'layout.html' %}
 
+{% block head %}
+{{ super() }}
+
+<!-- Google Maps -->
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+<script src="{{ url_for('static', filename='map.js') }}"></script>
+        
+{% endblock %}
+
 
 {% block content %}
 <div class="container-fluid">
 	<h1>{{ type + ' - ' + name }}</h1>
-	<p>No restrooms near this room available yet! :(</p>
+    <div id="map-canvas"></div>
 </div>
 </div>
 {% endblock %}
