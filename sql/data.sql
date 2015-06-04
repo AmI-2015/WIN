@@ -502,16 +502,16 @@ INSERT INTO `distance` (`restroom`, `place`, `priority`) VALUES
 
 DELETE FROM `restroom` WHERE `id` >= 1;
 INSERT INTO `restroom` (`id`, `wc_count`,`gender`) VALUES
-(28,2,"M")
-(29,0,"F")
-(30,0,"M")
-(31,0,"F")
-(32,2,"M")
-(33,0,"F")
-(34,0,"M")
-(35,0,"F")
-(36,2,"M")
-(37,0,"F")
-(38,0,"M")
-(39,0,"F")
+(28,2,"M"),
+(29,2,"F"),
+(30,5,"M"),
+(31,4,"F"),
+(32,2,"M"),
+(33,2,"F"),
+(34,4,"M"),
+(35,3,"F"),
+(36,2,"M"),
+(37,1,"F"),
+(38,5,"M"),
+(39,2,"F")
 
