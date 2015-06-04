@@ -20,4 +20,13 @@ $(document).ready(function() {
 			window.location = "/place/" + $("#selectroom").val() + "/";
 		}
 	});
+    
+    $("#typeofroom").change(function() {
+        $("#selectRoomForm").css("display", "block");
+    });
+    
+    $("#selectroom").change(function() {
+        $("#findForm").css("display", "block");
+    });
+    
 });
