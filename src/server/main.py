@@ -42,11 +42,11 @@ def nearRoom(placeId):
     return render_template('place.html', name=info['name'], type=info['type'])
 
 @app.route('/about')
-def index():
+def about():
     return render_template('about.html')
 
 @app.route('/contact')
-def index():
+def contact():
     return render_template('contact.html')
 
 if __name__ == '__main__':
