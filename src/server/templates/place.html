@@ -3,6 +3,17 @@
 {% block head %}
 {{ super() }}
 
+<style>
+	html, body, #map-canvas {
+	    height: 100%;
+	}
+</style>
+
+<!-- Restroom data to be parsed. KEEP before map.js loading-->
+<script>
+var defaultGender = {{ gender|tojson }}.toLowerCase();
+var restrooms = {{ restrooms|tojson }};
+</script>
 <!-- Google Maps -->
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
 <script src="{{ url_for('static', filename='map.js') }}"></script>
@@ -23,6 +34,6 @@
 	   </tr>
 	   {% endfor %}
     </table>
-    <div id="map-canvas"></div>
 </div>
+<div id="map-canvas"></div>
 {% endblock %}
