@@ -25,7 +25,7 @@
                 var image = '/static/images/' + defaultGender + color + ".png";
 
                 //create marker
-                marker[i] = new google.maps.Marker({
+                marker = new google.maps.Marker({
                     position: tempPosition,
                     map: map,
                     title: restrooms[i].name,
@@ -33,16 +33,16 @@
                 })
 
                 //create content window
-                var contentString = restrooms[i].name + "<br>Toilets: " + restrooms[i].wc_count - restrooms[i].wc_closed_count + "<br>People: " + restrooms[i].people_count;
-                infowindow[i] = new google.maps.InfoWindow({
-                    content: contentString
-                });
+                var contentString = restrooms[i].name + "<br>Toilets: " + (restrooms[i].wc_count - restrooms[i].wc_closed_count) + "<br>People: " + restrooms[i].people_count;
+                infowindow = new google.maps.InfoWindow();
 
-                //create event in order to show info window
-                google.maps.event.addListener(marker[i], 'click', function () {
-                    infowindow[i].open(map, marker[i]);
-                });
-
+                //create event in order to show info window                
+                google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
+                    return function() {
+                        infowindow.setContent(content);
+                        infowindow.open(map,marker);
+                    };
+                })(marker,contentString,infowindow));
             };
 
             
