@@ -4,9 +4,8 @@ Created on 20/apr/2015
 @author: luca
 '''
 
-from flask import Flask,render_template, abort
+from flask import Flask,render_template, abort, jsonify
 from flask_bootstrap import Bootstrap
-from flask.json import jsonify
 
 from database import DB
 
@@ -18,28 +17,25 @@ def index():
     #return render_template('index.html')
     return render_template('newtest.html', types = DB.getPlaceTypes())
 
-"""@app.route('/typeRoom/<string:sex>')
-def typeRoom(sex):
-    return render_template('typeRoom.html', sex=sex)
-
-@app.route('/typeRoom/<string:sex>/numberRoom/<string:type>')
-def numberRoom(sex, type):
-    return render_template('numberRoom.html', type=type, sex=sex)
-
-@app.route('/typeRoom/<string:sex>/numberRoom/<string:type>/restroomTable/<int:number>')
-def restroomTable(sex,type,number):
-    return render_template('restroomTable.html', sex=sex, type=type, number=number)"""
-
 @app.route('/placeType/<string:placeType>/')
 def placeType(placeType):
     return jsonify(rooms=DB.getPlaceInfoByType(placeType))
 
-@app.route('/place/<int:placeId>/')
-def nearRoom(placeId):
-    info = DB.getPlaceInfoByID(placeId)
-    if info == None:
+@app.route('/place/<int:placeID>/')
+def nearRestrooms(placeID):
+    place = DB.getPlaceInfoByID(placeID)
+    if place == None:
         abort(404)
-    return render_template('place.html', name=info['name'], type=info['type'])
+    restrooms=DB.getPriorityListFromPlace(placeID)
+    return render_template('place.html', place=place, restrooms=restrooms)
+
+@app.route('/place/<int:placeID>/<string:gender>/')
+def nearRestroomsFilterGender(placeID, gender):
+    place = DB.getPlaceInfoByID(placeID)
+    if place == None:
+        abort(404)
+    restrooms=DB.getPriorityListFromPlaceFilterGender(placeID, gender)
+    return render_template('place.html', place=place, restrooms=restrooms)
 
 @app.route('/about')
 def about():

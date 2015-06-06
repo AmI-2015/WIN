@@ -18,7 +18,7 @@ $(document).ready(function() {
 	$("#find").click(function() {
 		var id = $("#selectroom").val();
 		if (id !== null) {
-			window.location = "/place/" + $("#selectroom").val() + "/";
+			window.location = "/place/" + $("#selectroom").val() + "/" + $("input[name='gender']:checked").val() + "/";
 		}
 	});
     

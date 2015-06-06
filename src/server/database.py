@@ -22,8 +22,10 @@ stmt_restroomUpdatePeopleCount = "UPDATE `restroom` SET `people_count` = %s WHER
 stmt_restroomUpdateStatus = "UPDATE `restroom` SET `status` = %s WHERE `id` = %s"
 
 #stmt_distanceRestroomFromPlace = "SELECT `priority` FROM `distance` WHERE `restroom` = %s AND `place` = %s"
-stmt_distanceRestroomList = "SELECT `restroom`, `priority`, `people_count` FROM `distance`, `restroom` WHERE `place` = %s AND `restroom` = `id` ORDER BY `priority` ASC"
-stmt_distanceRestroomListFilterGender = "SELECT `restroom`, `priority`, `people_count`, `wc_count`, `status`, `wc_closed_count`, `lat`, `long`, `name` FROM `distance`, `restroom` R, `place` P WHERE `place` = %s AND `gender` = %s AND `restroom` = R.`id` AND R.`id` = P.`id` ORDER BY `priority` ASC"
+stmt_distanceRestroomList = "SELECT `restroom`, `priority`, `people_count`, `wc_count`, `status`, `wc_closed_count`, `lat`, `long`, `name` \
+                            FROM `distance`, `restroom` R, `place` P WHERE `place` = %s AND `restroom` = R.`id` AND R.`id` = P.`id` ORDER BY `priority` ASC"
+stmt_distanceRestroomListFilterGender = "SELECT `restroom`, `priority`, `people_count`, `wc_count`, `status`, `wc_closed_count`, `lat`, `long`, `name` \
+                            FROM `distance`, `restroom` R, `place` P WHERE `place` = %s AND `gender` = %s AND `restroom` = R.`id` AND R.`id` = P.`id` ORDER BY `priority` ASC"
 
 
 class Database(object):
@@ -159,11 +161,16 @@ class Database(object):
 
         cur = self.query(stmt_distanceRestroomList, (placeID,))
         r = cur.fetchall()
-        if len(r) == 0:
-            print "Warning: getPriorityListFromPlace no entry found for place ID '%s'" %(str(placeID)) 
         cur.close()
+        if len(r) == 0:
+            print "Warning: getPriorityListFromPlace no entry found for place ID '%s'" %(str(placeID))
         
-        return r
+        restrooms = []
+        for rest in r:
+            # `restroom`, `priority`, `people_count`, `wc_count`, `status`, `wc_closed_count`, `lat`, `long`
+            restrooms.append({'id': rest[0], 'priority': rest[1], 'people_count': rest[2], 'wc_count': rest[3], 'status': rest[4],
+                              'wc_closed_count': rest[5], 'lat': rest[6], 'long': rest[7], 'name': rest[8]})
+        return restrooms
     
     def getPriorityListFromPlaceFilterGender(self, placeID, gender):
         if isinstance(placeID, int) == False:
@@ -173,8 +180,7 @@ class Database(object):
         r = cur.fetchall()
         cur.close()
         if len(r) == 0:
-            print "Warning: getPriorityListFromPlace no entry found for place ID '%s' and gender '%s'" %(str(placeID),gender) 
-            return None
+            print "Warning: getPriorityListFromPlace no entry found for place ID '%s' and gender '%s'" %(str(placeID),gender)
         
         restrooms = []
         for rest in r:
