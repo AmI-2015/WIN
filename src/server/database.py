@@ -4,6 +4,7 @@ Created on 21/mag/2015
 @author: Simon Mezzomo
 '''
 
+import os
 import ConfigParser
 import mysql.connector
 
@@ -21,8 +22,8 @@ stmt_restroomUpdatePeopleCount = "UPDATE `restroom` SET `people_count` = %s WHER
 stmt_restroomUpdateStatus = "UPDATE `restroom` SET `status` = %s WHERE `id` = %s"
 
 #stmt_distanceRestroomFromPlace = "SELECT `priority` FROM `distance` WHERE `restroom` = %s AND `place` = %s"
-stmt_distanceRestroomList = "SELECT `restroom`, `priority` FROM `distance` WHERE `place` = %s ORDER BY `priority` ASC"
-stmt_distanceRestroomListFilterGender = "SELECT `restroom`, `priority` FROM `distance`, `restroom` WHERE `place` = %s AND `gender` = %s ORDER BY `priority` ASC"
+stmt_distanceRestroomList = "SELECT `restroom`, `priority`, `people_count` FROM `distance`, `restroom` WHERE `place` = %s AND `restroom` = `id` ORDER BY `priority` ASC"
+stmt_distanceRestroomListFilterGender = "SELECT `restroom`, `priority`, `people_count`, `wc_count`, `status`, `wc_closed_count`, `lat`, `long`, `name` FROM `distance`, `restroom` R, `place` P WHERE `place` = %s AND `gender` = %s AND `restroom` = R.`id` AND R.`id` = P.`id` ORDER BY `priority` ASC"
 
 
 class Database(object):
@@ -33,6 +34,7 @@ class Database(object):
         """Create a DB object.
         :cfgFilename filename for database connection configuration
         """
+        cfgFilename = os.path.join(os.path.dirname(os.path.abspath(__file__)), cfgFilename)
         configParser.read(cfgFilename)
         user = configParser.get('Database', 'user')
         password = configParser.get('Database', 'password')
@@ -54,6 +56,20 @@ class Database(object):
             self.types.append(row[0])
         cur.close()
 
+    def query(self, stmt, params):
+        """Return a usable cursor. Remember to close it.
+        Reconnect to server if connection times out.
+        """
+        try:
+            cur = self.conn.cursor()
+            cur.execute(stmt, params)
+        except (AttributeError, mysql.connector.OperationalError):
+            self.conn.ping(True)
+            cur = self.conn.cursor()
+            cur.execute(stmt, params)
+        return cur
+
+
     """
     Place queries
     """
@@ -61,8 +77,7 @@ class Database(object):
         if isinstance(placeID, int) == False:
             raise TypeError("argument must be of int type")
 
-        cur = self.conn.cursor()
-        cur.execute(stmt_placeID, (placeID,))
+        cur = self.query(stmt_placeID, (placeID,))
         r = cur.fetchone()
         cur.close()
 
@@ -73,8 +88,7 @@ class Database(object):
         return {'id': r[0], 'name': r[1], 'type': r[2]}
     
     def getPlaceInfoByName(self, name):
-        cur = self.conn.cursor()
-        cur.execute(stmt_placeName, (name,))
+        cur = self.query(stmt_placeName, (name,))
         r = cur.fetchone()
         cur.close()
 
@@ -88,8 +102,7 @@ class Database(object):
         """ Return a list of places as dictionary { id: 'id', name: 'name' }
         (id, name, type)
         """
-        cur = self.conn.cursor()
-        cur.execute(stmt_placeType, (typestr,))
+        cur = self.query(stmt_placeType, (typestr,))
         r = cur.fetchall()
         if len(r) == 0:
             print "Warning: getPlaceInfobyType no entry found for type '%s'" %(typestr)
@@ -111,8 +124,7 @@ class Database(object):
         if isinstance(restroomID, int) == False:
             raise TypeError("argument must be of int type")
 
-        cur = self.conn.cursor()
-        cur.execute(stmt_restroomID, (restroomID,))
+        cur = self.query(stmt_restroomID, (restroomID,))
         r = cur.fetchone()
         cur.close()
 
@@ -126,8 +138,7 @@ class Database(object):
         if isinstance(restroomID, int) == False:
             raise TypeError("argument must be of int type")
 
-        cur = self.conn.cursor()
-        cur.execute(stmt_restroomUpdatePeopleCount, (newCount, restroomID))
+        cur = self.query(stmt_restroomUpdatePeopleCount, (newCount, restroomID))
         self.conn.commit()
         cur.close()
 
@@ -135,8 +146,7 @@ class Database(object):
         if (isinstance(restroomID, int) == False) or (isinstance(restroomID, int) == False):
             raise TypeError("argument must be of int type")
 
-        cur = self.conn.cursor()
-        cur.execute(stmt_restroomUpdateStatus, (status, restroomID))
+        cur = self.query(stmt_restroomUpdateStatus, (status, restroomID))
         self.conn.commit()
         cur.close()
 
@@ -147,8 +157,7 @@ class Database(object):
         if isinstance(placeID, int) == False:
             raise TypeError("argument must be of int type")
 
-        cur = self.conn.cursor()
-        cur.execute(stmt_distanceRestroomList, (placeID,))
+        cur = self.query(stmt_distanceRestroomList, (placeID,))
         r = cur.fetchall()
         if len(r) == 0:
             print "Warning: getPriorityListFromPlace no entry found for place ID '%s'" %(str(placeID)) 
@@ -160,14 +169,19 @@ class Database(object):
         if isinstance(placeID, int) == False:
             raise TypeError("argument must be of int type")
 
-        cur = self.conn.cursor()
-        cur.execute(stmt_distanceRestroomListFilterGender, (placeID, gender))
+        cur = self.query(stmt_distanceRestroomListFilterGender, (placeID, gender))
         r = cur.fetchall()
+        cur.close()
         if len(r) == 0:
             print "Warning: getPriorityListFromPlace no entry found for place ID '%s' and gender '%s'" %(str(placeID),gender) 
-        cur.close()
+            return None
         
-        return r
+        restrooms = []
+        for rest in r:
+            # `restroom`, `priority`, `people_count`, `wc_count`, `status`, `wc_closed_count`, `lat`, `long`
+            restrooms.append({'id': rest[0], 'priority': rest[1], 'people_count': rest[2], 'wc_count': rest[3], 'status': rest[4],
+                              'wc_closed_count': rest[5], 'lat': rest[6], 'long': rest[7], 'name': rest[8]})
+        return restrooms
 
 
 """ Instance of Database class to be used.

@@ -10,7 +10,7 @@ from database import DB
 def test():
     print DB.getPlaceInfoByID(1)
 
-    class12 = DB.getPlaceInfoByName('Classroom 12')
+    class12 = DB.getPlaceInfoByName('12')
     print class12['id'], class12['name'], class12['type']
 
     print DB.getPlaceInfoByName('Studyroom nord')
