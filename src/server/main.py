@@ -4,7 +4,7 @@ Created on 20/apr/2015
 @author: luca
 '''
 
-from flask import Flask,render_template, abort, jsonify
+from flask import Flask,render_template, abort, jsonify, request
 from flask_bootstrap import Bootstrap
 
 from database import DB
