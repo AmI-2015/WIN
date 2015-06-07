@@ -29,6 +29,16 @@ def nearRestrooms(placeID):
     restrooms=DB.getPriorityListFromPlace(placeID)
     return render_template('place.html', place=place, restrooms=restrooms)
 
+@app.route('/updatestatus/<int:restId>', methods=['POST'])
+def switchControl(restId):
+    # get the request body
+    status = request.json
+    Open=status[restId]
+    if (Open==0):
+        DB.updateRestroomStatus(restId, 0)
+    else:
+        DB.updateRestroomStatus(restId, 1)
+
 @app.route('/place/<int:placeID>/<string:gender>/')
 def nearRestroomsFilterGender(placeID, gender):
     place = DB.getPlaceInfoByID(placeID)
