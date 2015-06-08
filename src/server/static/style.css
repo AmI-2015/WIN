@@ -1,6 +1,10 @@
 body {
     padding-top: 60px;
 }
+
+div.container {
+    margin-bottom: 20px;
+}
     
 #map-canvas {
     height: 100%;
