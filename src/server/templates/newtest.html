@@ -4,6 +4,7 @@
 {% block content %}
 
 <div class="container theme-showcase" role="main">
+    
     <div class="jumbotron">
         <h1>Find your toilet!</h1>
         <p>Find the nearest and less crowded bathroom!</p>
@@ -11,61 +12,62 @@
     </div>
 
     <div class="row">
+        
         <form class="form-horizontal">
-        <fieldset>
+            <fieldset>
 
-        <!-- Form Name -->
-        <legend>Find your toilet!</legend>
+            <!-- Form Name -->
+            <legend>Find your toilet!</legend>
 
-        <!-- Multiple Radios -->
-        <div class="form-group">
-          <label class="col-md-4 control-label" for="gender">Gender</label>
-          <div class="col-md-4">
-          <div class="radio">
-            <label for="gender-0">
-              <input type="radio" name="gender" id="gender-0" value="F" checked="checked">
-              Female
-            </label>
+            <!-- Gender Choice -->
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="gender">Gender</label>
+              <div class="col-md-4">
+                  <div class="radio">
+                    <label for="gender-0">
+                      <input type="radio" name="gender" id="gender-0" value="F" checked="checked">
+                      Female
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <label for="gender-1">
+                      <input type="radio" name="gender" id="gender-1" value="M">
+                      Male
+                    </label>
+                  </div>
+              </div>
             </div>
-          <div class="radio">
-            <label for="gender-1">
-              <input type="radio" name="gender" id="gender-1" value="M">
-              Male
-            </label>
+
+            <!-- Select Type of Room -->
+            <div class="form-group" id="typeRoomForm">
+                <label class="col-md-4 control-label" for="typeofroom">Type of Room</label>
+                <div class="col-md-4">
+                    <select id="typeofroom" name="typeofroom" class="form-control">
+                        <option disabled="disabled" selected="selected">-- select an option --</option>
+                        {% for type in types %}
+                        <option value="{{ type }}">{{ type }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
             </div>
-          </div>
-        </div>
 
-        <!-- Select Basic -->
-		<div class="form-group" id="typeRoomForm">
-			<label class="col-md-4 control-label" for="typeofroom">Type of Room</label>
-			<div class="col-md-4">
-				<select id="typeofroom" name="typeofroom" class="form-control">
-					<option value disabled selected>-- select an option --</option>
-					{% for type in types %}
-					<option value="{{ type }}">{{ type }}</option>
-					{% endfor %}
-				</select>
-			</div>
-		</div>
+            <!-- Select Room -->
+            <div class="form-group" id="selectRoomForm">
+              <label class="col-md-4 control-label" for="selectroom">Select Room</label>
+              <div class="col-md-4">
+                <select id="selectroom" name="selectroom" class="form-control"></select>
+              </div>
+            </div>
 
-		<!-- Select Basic -->
-        <div class="form-group" id="selectRoomForm">
-          <label class="col-md-4 control-label" for="selectroom">Select Room</label>
-          <div class="col-md-4">
-            <select id="selectroom" name="selectroom" class="form-control"></select>
-          </div>
-        </div>
+            <!-- Submit form -->
+            <div class="form-group" id="findForm">
+              <div class="col-md-4"></div>
+              <div class="col-md-4">
+                <button id="find" name="find" class="btn btn-default" type="button">Find it!</button>
+              </div>
+            </div>
 
-        <!-- Button -->
-        <div class="form-group" id="findForm">
-       	  <div class="col-md-4"></div>
-       	  <div class="col-md-4">
-        	<button id="find" name="find" class="btn btn-default" type="button">Find it!</button>
-          </div>
-        </div>
-
-        </fieldset>
+            </fieldset>
         </form>
     </div>
 </div>
@@ -73,7 +75,8 @@
 
 {% block scripts %}
 {{ super() }}
+
 <!-- Page scripts -->
-	<script src="{{ url_for('static', filename='win.js') }}"
-		type="text/javascript"></script>
+<script src="{{ url_for('static', filename='win.js') }}" type="text/javascript"></script>
+
 {% endblock %}
