@@ -15,7 +15,7 @@ configParser = ConfigParser.RawConfigParser()
 stmt_placeID = "SELECT `id`, `name`, `type` FROM `place` WHERE `id` = %s"
 stmt_placeName = "SELECT `id`, `name`, `type` FROM `place` WHERE `name` = %s"
 stmt_placeType = "SELECT `id`, `name` FROM `place` WHERE `type` = %s ORDER BY `name` ASC"
-stmt_placeTypeList = "SELECT DISTINCT `type` FROM `place`"
+stmt_placeTypeList = "SELECT DISTINCT `type` FROM `place` WHERE `type` <> 'Restroom'"
 
 stmt_restroomID = "SELECT `id`, `people_count`, `wc_count`, `status`, `wc_closed_count` FROM `restroom` WHERE `id` = %s"
 stmt_restroomUpdatePeopleCount = "UPDATE `restroom` SET `people_count` = %s WHERE `id` = %s"
@@ -51,7 +51,7 @@ class Database(object):
 
     def loadInitialData(self):
         cur = self.conn.cursor()
-        # fetch available types
+        # fetch available types for user UI (Exclude restroom)
         cur.execute(stmt_placeTypeList)
         r = cur.fetchall()
         for row in r:
@@ -102,7 +102,7 @@ class Database(object):
     
     def getPlaceInfoByType(self, typestr):
         """ Return a list of places as dictionary { id: 'id', name: 'name' }
-        (id, name, type)
+        (id, name)
         """
         cur = self.query(stmt_placeType, (typestr,))
         r = cur.fetchall()
@@ -186,7 +186,7 @@ class Database(object):
         for rest in r:
             # `restroom`, `priority`, `people_count`, `wc_count`, `status`, `wc_closed_count`, `lat`, `long`
             restrooms.append({'id': rest[0], 'priority': rest[1], 'people_count': rest[2], 'wc_count': rest[3], 'status': rest[4],
-                              'wc_closed_count': rest[5], 'lat': rest[6], 'long': rest[7], 'name': rest[8], 'wc_available' : rest[3] - rest[2] - rest[5]})
+                              'wc_closed_count': rest[5], 'lat': rest[6], 'long': rest[7], 'name': rest[8], 'wc_available' : rest[3] - rest[5]})
         return restrooms
 
 

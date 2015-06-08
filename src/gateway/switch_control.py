@@ -8,25 +8,36 @@ import RPi.GPIO as GPIO
 import time
 import requests
 
+inputPin = 13
+#outputPin = 15
+STATUS_OPEN = 0
+STATUS_CLOSED = 1
+
+host = 'localhost:5000'
+restroomId = 28
+serverUrl = 'http://' + host + '/updatestatus/' + str(restroomId)
+
 def switchcontrol():
 	GPIO.setmode(GPIO.BOARD)
-	Id=28
-	serverUrl='http://localhost:5000/updatestatus/'+Id
-	last=GPIO.LOW
-	flag=False
+	GPIO.setup(inputPin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+	# GPIO.setup(outputPin, GPIO.OUT)
+	# GPIO.output(outputPin, GPIO.HIGH)
+
+	# pulldown resistor on input: when switch is closed input is HIGH, otherwise is LOW
+	# Wiring: one end of the switch to VCC and the other one to inputPin
+	lastInput = -1  # force update at first loop
+
 	while (True):
-		GPIO.output(15,GPIO.HIGH)
-		time.sleep(0.1)
-		Input=GPIO.input(13)
-		if (last != Input and flag):
-			if(Input==GPIO.LOW):
-				#lo stato basso, cioe uscita in cortocircuito con l'ingresso, indica bagno chiuso (1)
-				data={ Id : 1}
-				requests.post(serverUrl, data)
+		input = GPIO.input(inputPin)
+		if (lastInput != input):
+			if (input == GPIO.HIGH):
+				# Switch closed
+				data = { restroomId : STATUS_CLOSED }
 			else:
-				data={ Id : 0}
-				requests.post(serverUrl, data)
-		last=GPIO.input(13)
-		flag=True
-		GPIO.output(15,GPIO.LOW)
+				# Switch open
+				data = { restroomId : STATUS_OPEN }
+			requests.post(serverUrl, data)
+			print "Updated status of restroom id: %s \n data = %s" % (restroomId, data) 
+			lastInput = input
+
 		time.sleep(2.3)

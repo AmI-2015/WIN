@@ -16,9 +16,9 @@
                 //position
                 tempPosition = new google.maps.LatLng(restrooms[i].lat, restrooms[i].long);
                 //set the color of markers
-                if (restrooms[i].wc_available > 0)
+                if (restrooms[i].wc_available > restrooms[i].wc_count)
                     color = 'g';
-                else if (restrooms[i].wc_available == 0)
+                else if (restrooms[i].wc_available == restrooms[i].wc_count)
                     color = 'y';
                 else
                     color = 'r';
