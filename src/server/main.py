@@ -14,8 +14,7 @@ Bootstrap(app)
 
 @app.route('/')
 def index():
-    #return render_template('index.html')
-    return render_template('newtest.html', types = DB.getPlaceTypes())
+    return render_template('index.html', types = DB.getPlaceTypes())
 
 @app.route('/placeType/<string:placeType>/')
 def placeType(placeType):
@@ -27,7 +26,7 @@ def nearRestrooms(placeID):
     if place == None:
         abort(404)
     restrooms=DB.getPriorityListFromPlace(placeID)
-    return render_template('place.html', place=place, restrooms=restrooms)
+    return render_template('restroom.html', place=place, restrooms=restrooms)
 
 @app.route('/updatestatus/<int:restId>', methods=['POST'])
 def switchControl(restId):
