@@ -26,6 +26,7 @@
         <thead>
             <th>Restroom Name</th>
             <th>People / Available WC</th>
+            <th>Status</th>
             <th>Waiting Time</th>
         </thead>
         <tbody>
@@ -34,6 +35,7 @@
            <tr>
                <td>{{ restroom.name }}</td>
                <td>{{ restroom.people_count|string + '/' + restroom.wc_available|string }}</td>
+               <td>{{ restroom.status|string }}</td> <!-- TODO: scrivi una stringa sensata al posto dell'int -->
                <td>{{ waitingTime.minuti|string + ':' + waitingTime.secondi|string }}</td>
            </tr>
            {% endfor %}
