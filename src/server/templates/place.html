@@ -3,17 +3,12 @@
 {% block head %}
 {{ super() }}
 
-<style>
-	html, body, #map-canvas {
-	    height: 100%;
-	}
-</style>
-
 <!-- Restroom data to be parsed. KEEP before map.js loading-->
-<script>
-var defaultGender = {{ gender|tojson }}.toLowerCase();
-var restrooms = {{ restrooms|tojson }};
+<script type="text/javascript">
+    var defaultGender = {{ gender|tojson }}.toLowerCase();
+    var restrooms = {{ restrooms|tojson }};
 </script>
+
 <!-- Google Maps -->
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
 <script src="{{ url_for('static', filename='map.js') }}"></script>
@@ -23,17 +18,27 @@ var restrooms = {{ restrooms|tojson }};
 
 {% block content %}
 <div class="container theme-showcase" role="main">
+    
 	<h1>{{ place.type + ' - ' + place.name }}</h1>
+    
 	<table class="table table-striped">
-	   {% for restroom in restrooms %}
-	   <!-- List restrooms by priority (distance) and also compute free wc -->
-	   <tr>
-	       <td>{{ restroom.name }}</td>
-	       <td>Currently available WC:</td>
-	       <td>{{ (restroom.wc_count - restroom.wc_closed_count - restroom.people_count)|string + '/' + (restroom.wc_count - restroom.wc_closed_count)|string }}</td>
-	   </tr>
-	   {% endfor %}
+        <thead>
+            <th>Restroom Name</th>
+            <th>Available WC</th>
+        </thead>
+        <tbody>
+           {% for restroom in restrooms %}
+           <!-- List restrooms by priority (distance) and also compute free wc -->
+           <tr>
+               <td>{{ restroom.name }}</td>
+               <td>{{ (restroom.wc_count - restroom.wc_closed_count - restroom.people_count)|string + '/' + (restroom.wc_count - restroom.wc_closed_count)|string }}</td>
+           </tr>
+           {% endfor %}
+        </tbody>
     </table>
+    
 </div>
+
 <div id="map-canvas"></div>
+
 {% endblock %}
