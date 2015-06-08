@@ -27,11 +27,11 @@ $(document).ready(function() {
     });
     
     /* add class 'active' to nav item */
-    if (location.pathname.substring(1) == "index.html") {
+    if (location.pathname.substring(1) == "index") {
         $(".navbar-nav li:nth-child(1)").addClass("active");
-    } else if (location.pathname.substring(1) == "about.html") {
+    } else if (location.pathname.substring(1) == "about") {
         $(".navbar-nav li:nth-child(2)").addClass("active");
-    } else if (location.pathname.substring(1) == "contact.html") {
+    } else if (location.pathname.substring(1) == "contact") {
         $(".navbar-nav li:nth-child(3)").addClass("active");
     }
 
