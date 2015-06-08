@@ -13,9 +13,10 @@ inputPin = 13
 STATUS_OPEN = 0
 STATUS_CLOSED = 1
 
-host = 'localhost:5000'
-restroomId = 28
-serverUrl = 'http://' + host + '/updatestatus/' + str(restroomId)
+# host = 'localhost:5000'
+host = 'simlt.pythonanywhere.com'
+restroomId = 28  # Restroom near class 12 'M'
+serverUrl = 'http://' + host + '/updatestatus/' + str(restroomId) +'/'
 
 def switchcontrol():
 	GPIO.setmode(GPIO.BOARD)
@@ -32,12 +33,15 @@ def switchcontrol():
 		if (lastInput != input):
 			if (input == GPIO.HIGH):
 				# Switch closed
-				data = { restroomId : STATUS_CLOSED }
+				data = { 'status' : STATUS_CLOSED }
 			else:
 				# Switch open
-				data = { restroomId : STATUS_OPEN }
+				data = { 'status' : STATUS_OPEN }
 			requests.post(serverUrl, data)
 			print "Updated status of restroom id: %s \n data = %s" % (restroomId, data) 
 			lastInput = input
 
-		time.sleep(2.3)
+		time.sleep(2.5)
+
+if __name__ == '__main__':
+	switchcontrol()

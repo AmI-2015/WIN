@@ -32,10 +32,9 @@ def nearRestrooms(placeID):
 @app.route('/updatestatus/<int:restroomId>/', methods=['POST'])
 def switchControl(restroomId):
     # get the request body
-    status = request.json
+    data = request.json
     # Default status is 0 (open)
-    Open=status[restroomId]
-    if (Open==0):
+    if (data['status']==0):
         DB.updateRestroomStatus(restroomId, 0)
     else:
         DB.updateRestroomStatus(restroomId, 1)
