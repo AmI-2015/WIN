@@ -8,6 +8,7 @@ from flask import Flask,render_template, abort, jsonify, request
 from flask_bootstrap import Bootstrap
 
 from database import DB
+from waiting_time import waitingTime
 
 app = Flask(__name__)
 Bootstrap(app)
@@ -44,7 +45,8 @@ def nearRestroomsFilterGender(placeID, gender):
     if place == None:
         abort(404)
     restrooms=DB.getPriorityListFromPlaceFilterGender(placeID, gender)
-    return render_template('restroom.html', place=place, restrooms=restrooms, gender=gender)
+    waiting_time=waitingTime(placeID,gender,restrooms)
+    return render_template('place.html', place=place, restrooms=restrooms, gender=gender, waiting_time=waiting_time)
 
 @app.route('/about')
 def about():
