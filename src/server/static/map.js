@@ -45,7 +45,5 @@
                 })(marker,contentString,infowindow));
             };
 
-            
-
         }
         google.maps.event.addDomListener(window, 'load', initialize);
