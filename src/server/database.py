@@ -8,8 +8,13 @@ import os
 import ConfigParser
 import mysql.connector
 
-configParser = ConfigParser.RawConfigParser()
+# Status codes
+statusCode = {
+    0: 'open',
+    1: 'closed',
+}
 
+configParser = ConfigParser.RawConfigParser()
 
 # Prepared statements
 stmt_placeID = "SELECT `id`, `name`, `type` FROM `place` WHERE `id` = %s"
@@ -181,12 +186,13 @@ class Database(object):
         cur.close()
         if len(r) == 0:
             print "Warning: getPriorityListFromPlace no entry found for place ID '%s' and gender '%s'" %(str(placeID),gender)
-        
+
         restrooms = []
         for rest in r:
             # `restroom`, `priority`, `people_count`, `wc_count`, `status`, `wc_closed_count`, `lat`, `long`
             restrooms.append({'id': rest[0], 'priority': rest[1], 'people_count': rest[2], 'wc_count': rest[3], 'status': rest[4],
-                              'wc_closed_count': rest[5], 'lat': rest[6], 'long': rest[7], 'name': rest[8], 'wc_available' : rest[3] - rest[5]})
+                              'wc_closed_count': rest[5], 'lat': rest[6], 'long': rest[7], 'name': rest[8],
+                              'wc_available' : rest[3] - rest[5], 'status_str': statusCode[rest[4]] })
         return restrooms
 
 

@@ -16,9 +16,9 @@
                 //position
                 tempPosition = new google.maps.LatLng(restrooms[i].lat, restrooms[i].long);
                 //set the color of markers
-                if (restrooms[i].wc_available > restrooms[i].wc_count)
+                if (restrooms[i].wc_available > restrooms[i].people_count && restrooms[i].status == 0)
                     color = 'g';
-                else if (restrooms[i].wc_available == restrooms[i].wc_count)
+                else if (restrooms[i].wc_available == restrooms[i].people_count)
                     color = 'y';
                 else
                     color = 'r';
@@ -33,7 +33,8 @@
                 })
 
                 //create content window
-                var contentString = restrooms[i].name + "<br>Toilets: " + (restrooms[i].wc_count - restrooms[i].wc_closed_count) + "<br>People: " + restrooms[i].people_count;
+                var contentString = restrooms[i].name + "<br>Toilets: " + (restrooms[i].wc_count - restrooms[i].wc_closed_count)
+            		+ "<br>People: " + restrooms[i].people_count + "<br>Status: " + restrooms[i].status_str;
                 infowindow = new google.maps.InfoWindow();
 
                 //create event in order to show info window                

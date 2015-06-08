@@ -4,7 +4,7 @@ Created on 20/apr/2015
 @author: luca
 '''
 
-from flask import Flask,render_template, abort, jsonify, request
+from flask import Flask, render_template, abort, jsonify, request
 from flask_bootstrap import Bootstrap
 
 from database import DB
@@ -12,6 +12,10 @@ from waiting_time import waitingTime
 
 app = Flask(__name__)
 Bootstrap(app)
+
+# Status codes
+STATUS_OPEN = 0
+STATUS_CLOSED = 1
 
 @app.route('/')
 def index():
@@ -33,18 +37,20 @@ def nearRestrooms(placeID):
 def switchControl(restroomId):
     # get the request body
     data = request.json
-    # Default status is 0 (open)
-    if (data['status']==0):
-        DB.updateRestroomStatus(restroomId, 0)
+    status = data['status']
+    if status == STATUS_CLOSED or status == STATUS_OPEN:
+        DB.updateRestroomStatus(restroomId, status)
     else:
-        DB.updateRestroomStatus(restroomId, 1)
+        abort(400) # BAD_REQUEST
+    # Send a response back for confirmation
+    return 'Updated restroom %s status: %s' % (restroomId, status)
 
 @app.route('/place/<int:placeID>/<string:gender>/')
 def nearRestroomsFilterGender(placeID, gender):
     place = DB.getPlaceInfoByID(placeID)
     if place == None:
         abort(404)
-    restrooms=DB.getPriorityListFromPlaceFilterGender(placeID, gender)
+    restrooms = DB.getPriorityListFromPlaceFilterGender(placeID, gender)
     waiting_time = waitingTime(placeID,gender,restrooms)
     return render_template('restroom.html', place=place, restrooms=restrooms, gender=gender, waitingTime=waiting_time)
 
