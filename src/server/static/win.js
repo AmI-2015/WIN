@@ -25,6 +25,15 @@ $(document).ready(function() {
     $("#selectroom").change(function() {
         $("#findForm").css("display", "block");
     });
+    
+    /* add class 'active' to nav item */
+    if (location.pathname.substring(1) == "index.html") {
+        $(".navbar-nav:nth-child(1)").addClass("active");
+    } else if (location.pathname.substring(1) == "about.html") {
+        $(".navbar-nav:nth-child(2)").addClass("active");
+    } else if (location.pathname.substring(1) == "contact.html") {
+        $(".navbar-nav:nth-child(3)").addClass("active");
+    }
 
 });
 
