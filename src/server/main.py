@@ -46,8 +46,8 @@ def nearRestroomsFilterGender(placeID, gender):
     if place == None:
         abort(404)
     restrooms=DB.getPriorityListFromPlaceFilterGender(placeID, gender)
-    waiting_time=waitingTime(placeID,gender,restrooms)
-    return render_template('restroom.html', place=place, restrooms=restrooms, gender=gender, waiting_time=waiting_time)
+    waiting_time = waitingTime(placeID,gender,restrooms)
+    return render_template('restroom.html', place=place, restrooms=restrooms, gender=gender, waitingTime=waiting_time)
 
 @app.route('/about')
 def about():

@@ -7,7 +7,7 @@
 <script type="text/javascript">
     var defaultGender = {{ gender|tojson }}.toLowerCase();
     var restrooms = {{ restrooms|tojson }};
-    var waitingTime = {{ waiting_time|tojson }}
+    var waitingTime = {{ waitingTime|tojson }};
 </script>
 
 <!-- Google Maps -->
@@ -25,7 +25,7 @@
 	<table class="table table-striped">
         <thead>
             <th>Restroom Name</th>
-            <th>Available WC</th>
+            <th>People / Available WC</th>
             <th>Waiting Time </th>
         </thead>
         <tbody>
@@ -33,8 +33,8 @@
            <!-- List restrooms by priority (distance) and also compute free wc -->
            <tr>
                <td>{{ restroom.name }}</td>
-               <td>{{ (restroom.wc_count - restroom.wc_closed_count - restroom.people_count)|string + '/' + (restroom.wc_count - restroom.wc_closed_count)|string }}</td>
-               <td>{{ waitingTime.minuti|string + ':' + waitingTime.secondi|string }} </td>
+               <td>{{ restroom.people_count|string + '/' + restroom.wc_available|string }}</td>
+               <td>{{ waitingTime.minuti|string + ':' + waitingTime.secondi|string }}</td>
            </tr>
            {% endfor %}
         </tbody>

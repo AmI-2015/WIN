@@ -16,12 +16,12 @@ def waitingTime(placeID, gender, restrooms):
         maxTime = 75
     for restroom in restrooms:
         waitingTime = 0
-        wc_available = restroom.pop('wc_count') - restroom.pop('wc_closed_count')
-        if(wc_available < restroom.pop('people_count')):
+        wc_available = restroom['wc_count'] - restroom['wc_closed_count']
+        if(wc_available < restroom['people_count']):
             if(wc_available > 3):
-                numberPeopleInside = restroom.pop('people_count') - 1  # probabilmente uno si stara' lavando le mani
+                numberPeopleInside = restroom['people_count'] - 1  # probabilmente uno si stara' lavando le mani
             else:
-                numberPeopleInside = restroom.pop('people_count')  # dato che il bagno e' piu' piccolo forse non ci sara' sempre uno che
+                numberPeopleInside = restroom['people_count']  # dato che il bagno e' piu' piccolo forse non ci sara' sempre uno che
                                                                 # lava le mani
             peopleWaiting = numberPeopleInside - wc_available
             for person in range(0, peopleWaiting):
@@ -34,5 +34,5 @@ def waitingTime(placeID, gender, restrooms):
         else:
             minuti = 0
             secondi = 0
-        waitingTimeRestrooms.append({'id' : restroom.pop('id'), 'minuti' : minuti, 'secondi' : secondi})
+        waitingTimeRestrooms.append({'id' : restroom['id'], 'minuti' : minuti, 'secondi' : secondi})
     return waitingTimeRestrooms
