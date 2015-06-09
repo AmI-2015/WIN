@@ -37,6 +37,9 @@ def estimateWaitingTime(placeID, restrooms):
         else:
             minuti = 0
             secondi = 0
+
+        minuti = str(minuti).zfill(2)
+        secondi = str(secondi).zfill(2)
         waitingTimeRestrooms.append({'id' : restroom['id'], 'minuti' : minuti, 'secondi' : secondi})
     return waitingTimeRestrooms
 

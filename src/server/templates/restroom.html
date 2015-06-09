@@ -25,7 +25,7 @@
             <th>Restroom Name</th>
             <th>People / Available WC</th>
             <th>Status</th>
-            <th>Waiting Time</th>
+            <th>Expected Waiting Time (mm:ss)</th>
         </thead>
         <tbody>
            {% for restroom in restrooms %}
@@ -34,7 +34,7 @@
                <td>{{ restroom.name }}</td>
                <td>{{ restroom.people_count|string + '/' + restroom.wc_available|string }}</td>
                <td>{{ restroom.status_str }}</td>
-               <td>{{ restroom.minuti|string + ':' + restroom.secondi|string }}</td>
+               <td>{{ restroom.minuti + ':' + restroom.secondi }}</td>
            </tr>
            {% endfor %}
         </tbody>
