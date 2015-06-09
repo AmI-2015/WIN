@@ -139,7 +139,7 @@ class Database(object):
             print "Warning: getRestroomInfobyID no entry found for restroom ID '%s'" %(str(restroomID))
             return None
         
-        return {'id': r[0], 'peopleCount': r[1], 'wcCount': r[2], 'status': r[3], 'wcClosedCount': r[4]}
+        return {'id': r[0], 'people_count': r[1], 'wc_count': r[2], 'status': r[3], 'wc_closed_count': r[4], 'wc_available' : r[2] - r[4]}
     
     def updateRestroomPeopleCount(self, restroomID, newCount):
         if isinstance(restroomID, int) == False:

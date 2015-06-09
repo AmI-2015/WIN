@@ -25,6 +25,10 @@ def index():
 def placeType(placeType):
     return jsonify(rooms=DB.getPlaceInfoByType(placeType))
 
+@app.route('/restroom/<int:restroomID>/')
+def restroomData(restroomID):
+    return jsonify(data=DB.getRestroomInfoByID(restroomID))
+
 '''@app.route('/place/<int:placeID>/')
 def nearRestrooms(placeID):
     place = DB.getPlaceInfoByID(placeID)
@@ -42,7 +46,6 @@ def nearRestroomsFilterGender(placeID, gender):
     restroomDict = DB.getPriorityListFromPlaceFilterGender(placeID, gender)
     addWaitingTimeToRestroomDict(placeID, restroomDict)
     return render_template('restroom.html', place=place, restrooms=restroomDict.values())
-
 
 @app.route('/updatestatus/<int:restroomId>/', methods=['POST'])
 def switchControl(restroomId):
