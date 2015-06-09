@@ -6,7 +6,7 @@ Created on 07/giu/2015
 
 import random
 
-def waitingTime(placeID, restrooms):
+def estimateWaitingTime(placeID, restrooms):
     waitingTimeRestrooms = []
     
     for restroom in restrooms:
@@ -38,3 +38,10 @@ def waitingTime(placeID, restrooms):
             secondi = 0
         waitingTimeRestrooms.append({'id' : restroom['id'], 'minuti' : minuti, 'secondi' : secondi})
     return waitingTimeRestrooms
+
+def addWaitingTimeToRestroomDict(placeID, restroomDict):
+    waitingTimes = estimateWaitingTime(placeID,restroomDict.values())
+    for newinfo in waitingTimes:
+        restroomID = newinfo['id']
+        restroomDict[restroomID]['minuti'] = newinfo['minuti']
+        restroomDict[restroomID]['secondi'] = newinfo['secondi']

@@ -6,7 +6,6 @@
 <!-- Restroom data to be parsed. KEEP before map.js loading-->
 <script type="text/javascript">
     var restrooms = {{ restrooms|tojson }};
-    var waitingTime = {{ waitingTime|tojson }};
 </script>
 
 <!-- Google Maps -->
@@ -35,7 +34,7 @@
                <td>{{ restroom.name }}</td>
                <td>{{ restroom.people_count|string + '/' + restroom.wc_available|string }}</td>
                <td>{{ restroom.status_str }}</td>
-               <td>{{ waitingTime.minuti|string + ':' + waitingTime.secondi|string }}</td>
+               <td>{{ restroom.minuti|string + ':' + restroom.secondi|string }}</td>
            </tr>
            {% endfor %}
         </tbody>
