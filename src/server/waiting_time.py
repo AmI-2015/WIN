@@ -6,16 +6,18 @@ Created on 07/giu/2015
 
 import random
 
-def waitingTime(placeID, gender, restrooms):
+def waitingTime(placeID, restrooms):
     waitingTimeRestrooms = []
-    if(gender == "M"):
-        minTime = 40  # tempo in secondi
-        maxTime = 60
-    else:
-        minTime = 50
-        maxTime = 75
+    
     for restroom in restrooms:
         waitingTime = 0
+        if(restroom['gender'] == "M"):
+            minTime = 40  # tempo in secondi
+            maxTime = 60
+        else:
+            minTime = 50
+            maxTime = 75
+
         wc_available = restroom['wc_count'] - restroom['wc_closed_count']
         if(wc_available < restroom['people_count']):
             if(wc_available > 3):

@@ -11,7 +11,7 @@
             var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
             var marker =[];
 	        var infowindow =[];
-	    
+
             for (i = 0; i < restrooms.length; i++) {
                 //position
                 tempPosition = new google.maps.LatLng(restrooms[i].lat, restrooms[i].long);
@@ -22,7 +22,7 @@
                     color = 'y';
                 else
                     color = 'r';
-                var image = '/static/images/' + defaultGender + color + ".png";
+                var image = '/static/images/' + restrooms[i].gender.toLowerCase() + color + ".png";
 
                 //create marker
                 marker = new google.maps.Marker({
@@ -37,13 +37,23 @@
             		+ "<br>People: " + restrooms[i].people_count + "<br>Status: " + restrooms[i].status_str;
                 infowindow = new google.maps.InfoWindow();
 
-                //create event in order to show info window                
+                //create event in order to show info window
                 google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
                     return function() {
                         infowindow.setContent(content);
                         infowindow.open(map,marker);
                     };
                 })(marker,contentString,infowindow));
+
+
+                // add hallway overlay
+                var imageBounds = new google.maps.LatLngBounds(
+                        new google.maps.LatLng(45.060240762168780,7.654595375061035),
+                        new google.maps.LatLng(45.066787985689180,7.664896811256426));
+                var overlayOptions  = {clickable:false};
+				var overlay = new google.maps.GroundOverlay(
+				"http://www.polito.it/ateneo/sedi/images/sede_overlay.png", imageBounds, overlayOptions);
+				overlay.setMap(map);
             };
 
         }

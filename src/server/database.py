@@ -27,9 +27,9 @@ stmt_restroomUpdatePeopleCount = "UPDATE `restroom` SET `people_count` = %s WHER
 stmt_restroomUpdateStatus = "UPDATE `restroom` SET `status` = %s WHERE `id` = %s"
 
 #stmt_distanceRestroomFromPlace = "SELECT `priority` FROM `distance` WHERE `restroom` = %s AND `place` = %s"
-stmt_distanceRestroomList = "SELECT `restroom`, `priority`, `people_count`, `wc_count`, `status`, `wc_closed_count`, `lat`, `long`, `name` \
+stmt_distanceRestroomList = "SELECT `restroom`, `priority`, `people_count`, `wc_count`, `status`, `wc_closed_count`, `lat`, `long`, `name`, `gender` \
                             FROM `distance`, `restroom` R, `place` P WHERE `place` = %s AND `restroom` = R.`id` AND R.`id` = P.`id` ORDER BY `priority` ASC"
-stmt_distanceRestroomListFilterGender = "SELECT `restroom`, `priority`, `people_count`, `wc_count`, `status`, `wc_closed_count`, `lat`, `long`, `name` \
+stmt_distanceRestroomListFilterGender = "SELECT `restroom`, `priority`, `people_count`, `wc_count`, `status`, `wc_closed_count`, `lat`, `long`, `name`, `gender` \
                             FROM `distance`, `restroom` R, `place` P WHERE `place` = %s AND `gender` = %s AND `restroom` = R.`id` AND R.`id` = P.`id` ORDER BY `priority` ASC"
 
 
@@ -174,7 +174,8 @@ class Database(object):
         for rest in r:
             # `restroom`, `priority`, `people_count`, `wc_count`, `status`, `wc_closed_count`, `lat`, `long`
             restrooms.append({'id': rest[0], 'priority': rest[1], 'people_count': rest[2], 'wc_count': rest[3], 'status': rest[4],
-                              'wc_closed_count': rest[5], 'lat': rest[6], 'long': rest[7], 'name': rest[8]})
+                              'wc_closed_count': rest[5], 'lat': rest[6], 'long': rest[7], 'name': rest[8], 'gender': rest[9],
+                              'wc_available' : rest[3] - rest[5], 'status_str': statusCode[rest[4]]})
         return restrooms
     
     def getPriorityListFromPlaceFilterGender(self, placeID, gender):
@@ -191,8 +192,8 @@ class Database(object):
         for rest in r:
             # `restroom`, `priority`, `people_count`, `wc_count`, `status`, `wc_closed_count`, `lat`, `long`
             restrooms.append({'id': rest[0], 'priority': rest[1], 'people_count': rest[2], 'wc_count': rest[3], 'status': rest[4],
-                              'wc_closed_count': rest[5], 'lat': rest[6], 'long': rest[7], 'name': rest[8],
-                              'wc_available' : rest[3] - rest[5], 'status_str': statusCode[rest[4]] })
+                              'wc_closed_count': rest[5], 'lat': rest[6], 'long': rest[7], 'name': rest[8], 'gender': rest[9],
+                              'wc_available' : rest[3] - rest[5], 'status_str': statusCode[rest[4]]})
         return restrooms
 
 

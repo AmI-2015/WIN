@@ -31,7 +31,17 @@ def nearRestrooms(placeID):
     if place == None:
         abort(404)
     restrooms=DB.getPriorityListFromPlace(placeID)
-    return render_template('restroom.html', place=place, restrooms=restrooms)
+    waiting_time = waitingTime(placeID, restrooms)
+    return render_template('restroom.html', place=place, restrooms=restrooms, waitingTime=waiting_time)
+
+@app.route('/place/<int:placeID>/<string:gender>/')
+def nearRestroomsFilterGender(placeID, gender):
+    place = DB.getPlaceInfoByID(placeID)
+    if place == None:
+        abort(404)
+    restrooms = DB.getPriorityListFromPlaceFilterGender(placeID, gender)
+    waiting_time = waitingTime(placeID, restrooms)
+    return render_template('restroom.html', place=place, restrooms=restrooms, waitingTime=waiting_time)
 
 @app.route('/updatestatus/<int:restroomId>/', methods=['POST'])
 def switchControl(restroomId):
@@ -44,15 +54,6 @@ def switchControl(restroomId):
         abort(400) # BAD_REQUEST
     # Send a response back for confirmation
     return 'Updated restroom %s status: %s' % (restroomId, status)
-
-@app.route('/place/<int:placeID>/<string:gender>/')
-def nearRestroomsFilterGender(placeID, gender):
-    place = DB.getPlaceInfoByID(placeID)
-    if place == None:
-        abort(404)
-    restrooms = DB.getPriorityListFromPlaceFilterGender(placeID, gender)
-    waiting_time = waitingTime(placeID,gender,restrooms)
-    return render_template('restroom.html', place=place, restrooms=restrooms, gender=gender, waitingTime=waiting_time)
 
 @app.route('/about')
 def about():
