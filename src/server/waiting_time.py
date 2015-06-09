@@ -19,7 +19,7 @@ def estimateWaitingTime(placeID, restrooms):
             maxTime = 75
 
         wc_available = restroom['wc_count'] - restroom['wc_closed_count']
-        if(wc_available < restroom['people_count']):
+        if(wc_available != 0 and wc_available < restroom['people_count']):
             if(wc_available > 3):
                 numberPeopleInside = restroom['people_count'] - 1  # probabilmente uno si stara' lavando le mani
             else:
@@ -30,6 +30,7 @@ def estimateWaitingTime(placeID, restrooms):
                 waitingTime += random.randint(minTime, maxTime)  # aggiunge il tempo di attesa per le persone in coda
             for person in range(0, wc_available):
                 waitingTime += random.randint(0, maxTime)  # aggiunge il tempo di attesa per le persone che occupano attualmente il bagno
+
             waitingTime = waitingTime // wc_available
             minuti = waitingTime // 60
             secondi = waitingTime % 60

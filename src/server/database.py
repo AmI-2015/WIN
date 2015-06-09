@@ -47,8 +47,8 @@ class Database(object):
         password = configParser.get('Database', 'password')
         host = configParser.get('Database', 'host')
         database = configParser.get('Database', 'database')
-        self.conn = mysql.connector.connect(user=user, password=password, host=host, database=database)
-        
+
+        self.conn = mysql.connector.connect(user=user, password=password, host=host, database=database, autocommit=True)
         self.loadInitialData();
     
     def close(self):
@@ -146,7 +146,6 @@ class Database(object):
             raise TypeError("argument must be of int type")
 
         cur = self.query(stmt_restroomUpdatePeopleCount, (newCount, restroomID))
-        self.conn.commit()
         cur.close()
 
     def updateRestroomStatus(self, restroomID, status):
@@ -154,7 +153,6 @@ class Database(object):
             raise TypeError("argument must be of int type")
 
         cur = self.query(stmt_restroomUpdateStatus, (status, restroomID))
-        self.conn.commit()
         cur.close()
 
     """
@@ -192,7 +190,7 @@ class Database(object):
 
         restrooms = {}
         for rest in r:
-            # `restroom`, `priority`, `people_count`, `wc_count`, `status`, `wc_closed_count`, `lat`, `long`
+            # `restroom`, `priority`, `people_count`, `wc_count`, `status`, `wc_closed_count`, `lat`, `long`, `name`, `gender`
             restrooms[rest[0]] = ({'id': rest[0], 'priority': rest[1], 'people_count': rest[2], 'wc_count': rest[3], 'status': rest[4],
                               'wc_closed_count': rest[5], 'lat': rest[6], 'long': rest[7], 'name': rest[8], 'gender': rest[9],
                               'wc_available' : rest[3] - rest[5], 'status_str': statusCode[rest[4]]})
