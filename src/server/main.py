@@ -52,12 +52,12 @@ def nearRestroomsFilterGender(placeID, gender):
         abort(404)
     restrooms = DB.getPriorityListFromPlaceFilterGender(placeID, gender)
     waiting_time = waitingTime(placeID,gender,restrooms)
-	for newinfo in waiting_time:
+    for newinfo in waiting_time:
         for rest in restrooms:
             if(rest['id']==newinfo['id']):
                 rest['minuti']=newinfo['minuti']
                 rest['secondi']=newinfo['secondi']
-				break
+		break
     return render_template('restroom.html', place=place, restrooms=restrooms, gender=gender)
 
 @app.route('/about')
