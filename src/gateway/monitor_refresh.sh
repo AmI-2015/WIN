@@ -1,4 +1,3 @@
 #!/bin/bash
 
-	url= "simlt.pythonanywhere.com"
-	midori -a "http://"+$url+"/place/28/M/" -i 20 -e Fullscreen
+	midori -a "http://simlt.pythonanywhere.com/place/28/M/" -i 20 -e Fullscreen
