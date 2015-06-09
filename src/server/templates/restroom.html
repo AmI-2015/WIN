@@ -5,7 +5,6 @@
 
 <!-- Restroom data to be parsed. KEEP before map.js loading-->
 <script type="text/javascript">
-    var defaultGender = {{ gender|tojson }}.toLowerCase();
     var restrooms = {{ restrooms|tojson }};
     var waitingTime = {{ waitingTime|tojson }};
 </script>
@@ -41,9 +40,9 @@
            {% endfor %}
         </tbody>
     </table>
-    
+    <div id="map-canvas"></div>
 </div>
 
-<div id="map-canvas"></div>
+
 
 {% endblock %}

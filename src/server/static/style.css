@@ -2,20 +2,18 @@ html {
     height: 100%;
 }
 
-
 body {
     height: 100%;
     padding-top: 60px;
 }
-
-div.container {
-    margin-bottom: 20px;
-}
     
 #map-canvas {
-    height: 100%;
-    margin: 0px;
-    padding: 0px;
+    height: 400px;
+    margin-top: 20px;
+}
+
+#content {
+	height: auto;
 }
 
 div#selectRoomForm, div#findForm {
