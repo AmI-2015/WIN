@@ -40,7 +40,7 @@ def statusCheck():
     # Turn on both leds to check at start
     GPIO.output(ledGreen, GPIO.HIGH)
     GPIO.output(ledRed, GPIO.HIGH)
-    time.sleep(0.5)
+    time.sleep(0.2)
 
     # pull-up resistor on input: when switch is closed input is LOW, otherwise is HIGH
     # Wiring: one end of the switch to GND and the other one to inputPin
@@ -56,7 +56,7 @@ def statusCheck():
 def checkSwitch(lastInput):
     input = GPIO.input(inputPin)
     if (lastInput != input):
-        if (input == GPIO.HIGH):
+        if (input == GPIO.LOW):
             # Switch closed
             data = { 'status' : STATUS_CLOSED }
         else:
@@ -68,12 +68,9 @@ def checkSwitch(lastInput):
 
 
 def checkStatus(oldStatus):
-    try:
-        r = requests.get(getdataUrl)
-        data = r.json()['data']
-    except ConnectionError:
-        print "Connection Error"
-        return oldStatus
+    r = requests.get(getdataUrl)
+    #data = r.json()['data']  # this works only for newer versions of requests library
+    data = r.json['data']
 
     # Turn on red light if out of service or there are more people than WC available
     if data['status'] == STATUS_CLOSED or data['people_count'] >= data['wc_available']:
