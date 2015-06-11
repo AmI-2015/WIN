@@ -43,9 +43,14 @@ def estimateWaitingTime(placeID, restrooms):
         waitingTimeRestrooms.append({'id' : restroom['id'], 'minuti' : minuti, 'secondi' : secondi})
     return waitingTimeRestrooms
 
-def addWaitingTimeToRestroomDict(placeID, restroomDict):
+def addWaitingTimeToRestroomDict(placeID, restroomDict):                                                                                
     waitingTimes = estimateWaitingTime(placeID,restroomDict.values())
     for newinfo in waitingTimes:
         restroomID = newinfo['id']
-        restroomDict[restroomID]['minuti'] = newinfo['minuti']
-        restroomDict[restroomID]['secondi'] = newinfo['secondi']
+        if(restroomDict[restroomID]['status_str']=='open'):
+            restroomDict[restroomID]['waiting_time'] = str(newinfo['minuti'])+":"+str(newinfo['secondi'])
+            restroomDict[restroomID]['people_on_wc_avaiable'] = str(restroomDict[restroomID]['people_count'])+'/'+str(restroomDict[restroomID]['wc_avaiable'])
+        else:
+            restroomDict[restroomID]['waiting_time'] = '/'
+            restroomDict[restroomID]['people_on_wc_avaiable'] = '/'
+

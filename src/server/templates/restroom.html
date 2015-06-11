@@ -32,9 +32,9 @@
            <!-- List restrooms by priority (distance) and also compute free wc -->
            <tr>
                <td>{{ restroom.name }}</td>
-               <td>{{ restroom.people_count|string + '/' + restroom.wc_available|string }}</td>
+               <td>{{ restroom.people_on_wc_avaiable }}</td>
                <td>{{ restroom.status_str }}</td>
-               <td>{{ restroom.minuti + ':' + restroom.secondi }}</td>
+               <td>{{ restroom.waiting_time }}</td>
            </tr>
            {% endfor %}
         </tbody>
