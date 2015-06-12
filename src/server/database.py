@@ -7,6 +7,7 @@ Created on 21/mag/2015
 import os
 import ConfigParser
 import mysql.connector
+from collections import OrderedDict
 
 # Status codes
 statusCode = {
@@ -169,7 +170,7 @@ class Database(object):
         if len(r) == 0:
             print "Warning: getPriorityListFromPlace no entry found for place ID '%s'" %(str(placeID))
         
-        restrooms = {}
+        restrooms = OrderedDict()
         for rest in r:
             # `restroom`, `priority`, `people_count`, `wc_count`, `status`, `wc_closed_count`, `lat`, `long`
             restrooms[rest[0]] = ({'id': rest[0], 'priority': rest[1], 'people_count': rest[2], 'wc_count': rest[3], 'status': rest[4],
@@ -188,7 +189,7 @@ class Database(object):
         if len(r) == 0:
             print "Warning: getPriorityListFromPlace no entry found for place ID '%s' and gender '%s'" %(str(placeID),gender)
 
-        restrooms = {}
+        restrooms = OrderedDict()
         for rest in r:
             # `restroom`, `priority`, `people_count`, `wc_count`, `status`, `wc_closed_count`, `lat`, `long`, `name`, `gender`
             restrooms[rest[0]] = ({'id': rest[0], 'priority': rest[1], 'people_count': rest[2], 'wc_count': rest[3], 'status': rest[4],
