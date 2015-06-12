@@ -49,8 +49,8 @@ def addWaitingTimeToRestroomDict(placeID, restroomDict):
         restroomID = newinfo['id']
         if(restroomDict[restroomID]['status_str']=='open'):
             restroomDict[restroomID]['waiting_time'] = str(newinfo['minuti'])+":"+str(newinfo['secondi'])
-            restroomDict[restroomID]['people_on_wc_avaiable'] = str(restroomDict[restroomID]['people_count'])+'/'+str(restroomDict[restroomID]['wc_avaiable'])
+            restroomDict[restroomID]['people_on_wc_available'] = str(restroomDict[restroomID]['people_count'])+'/'+str(restroomDict[restroomID]['wc_available'])
         else:
-            restroomDict[restroomID]['waiting_time'] = '/'
-            restroomDict[restroomID]['people_on_wc_avaiable'] = '/'
+            restroomDict[restroomID]['waiting_time'] = '--'
+            restroomDict[restroomID]['people_on_wc_available'] = '--'
 
