@@ -56,7 +56,7 @@ def switchControl(restroomId):
     status = data['status']
     if status == STATUS_CLOSED or status == STATUS_OPEN:
         DB.updateRestroomStatus(restroomId, status)
-		DB.updateRestroomPeopleCount(restroomId, 0)
+	DB.updateRestroomPeopleCount(restroomId, 0)
     else:
         abort(400) # BAD_REQUEST
     # Send a response back for confirmation
