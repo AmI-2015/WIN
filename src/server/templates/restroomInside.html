@@ -32,8 +32,8 @@
 
 {% block content %}
 <div class="container theme-showcase" role="main">
-    <h1 align="center">{{restroom.type + ": " restroom.name + " is " + restroom.status_str }}</title>
-	<p>Other restrooms closer:</p>
+    <h1 align="center">{{ restroom.name + " is " + restroom.status_str }}</h1>
+	<h2>Other restrooms near here:</h2>
     
 	<table class="table table-striped">
         <thead>
@@ -43,16 +43,17 @@
             <th>Expected Waiting Time (mm:ss)</th>
         </thead>
         <tbody>
-           {% for restroom in restrooms %}
+           {% for r in restrooms %}
            <!-- List restrooms by priority (distance) and also compute free wc -->
           <tr>
-               <td>{{ restroom.name }}</td>
-               <td>{{ restroom.people_on_wc_avaiable }}</td>
-               <td>{{ restroom.status_str }}</td>
-               <td>{{ restroom.waiting_time }}</td>
+               <td>{{ r.name }}</td>
+               <td>{{ r.people_on_wc_available }}</td>
+               <td>{{ r.status_str }}</td>
+               <td>{{ r.waiting_time }}</td>
            </tr>
            {% endfor %}
         </tbody>
     </table>
     <div id="map-canvas"></div>
 </div>
+{% endblock %}

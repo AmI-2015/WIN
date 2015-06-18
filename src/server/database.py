@@ -9,11 +9,6 @@ import ConfigParser
 import mysql.connector
 from collections import OrderedDict
 
-# Status codes
-statusCode = {
-    0: 'open',
-    1: 'closed',
-}
 
 configParser = ConfigParser.RawConfigParser()
 
@@ -23,11 +18,10 @@ stmt_placeName = "SELECT `id`, `name`, `type` FROM `place` WHERE `name` = %s"
 stmt_placeType = "SELECT `id`, `name` FROM `place` WHERE `type` = %s ORDER BY `name` ASC"
 stmt_placeTypeList = "SELECT DISTINCT `type` FROM `place` WHERE `type` <> 'Restroom'"
 
-stmt_restroomID = "SELECT `id`, `people_count`, `wc_count`, `status`, `wc_closed_count` FROM `restroom` WHERE `id` = %s"
+stmt_restroomID = "SELECT R.`id`, `people_count`, `wc_count`, `status`, `wc_closed_count`, `gender`, `name`, `type` FROM `restroom` R, `place` P WHERE R.`id` = %s AND R.`id` = P.`id`"
 stmt_restroomUpdatePeopleCount = "UPDATE `restroom` SET `people_count` = %s WHERE `id` = %s"
 stmt_restroomUpdateStatus = "UPDATE `restroom` SET `status` = %s WHERE `id` = %s"
 
-#stmt_distanceRestroomFromPlace = "SELECT `priority` FROM `distance` WHERE `restroom` = %s AND `place` = %s"
 stmt_distanceRestroomList = "SELECT `restroom`, `priority`, `people_count`, `wc_count`, `status`, `wc_closed_count`, `lat`, `long`, `name`, `gender` \
                             FROM `distance`, `restroom` R, `place` P WHERE `place` = %s AND `restroom` = R.`id` AND R.`id` = P.`id` ORDER BY `priority` ASC"
 stmt_distanceRestroomListFilterGender = "SELECT `restroom`, `priority`, `people_count`, `wc_count`, `status`, `wc_closed_count`, `lat`, `long`, `name`, `gender` \
@@ -140,7 +134,8 @@ class Database(object):
             print "Warning: getRestroomInfobyID no entry found for restroom ID '%s'" %(str(restroomID))
             return None
         
-        return {'id': r[0], 'people_count': r[1], 'wc_count': r[2], 'status': r[3], 'wc_closed_count': r[4], 'wc_available' : r[2] - r[4]}
+        return {'id': r[0], 'people_count': r[1], 'wc_count': r[2], 'status': r[3], 'wc_closed_count': r[4],
+                'gender': r[5], 'name': r[6], 'type': r[7], 'wc_available' : r[2] - r[4]}
     
     def updateRestroomPeopleCount(self, restroomID, newCount):
         if isinstance(restroomID, int) == False:
@@ -175,7 +170,7 @@ class Database(object):
             # `restroom`, `priority`, `people_count`, `wc_count`, `status`, `wc_closed_count`, `lat`, `long`
             restrooms[rest[0]] = ({'id': rest[0], 'priority': rest[1], 'people_count': rest[2], 'wc_count': rest[3], 'status': rest[4],
                               'wc_closed_count': rest[5], 'lat': rest[6], 'long': rest[7], 'name': rest[8], 'gender': rest[9],
-                              'wc_available' : rest[3] - rest[5], 'status_str': statusCode[rest[4]]})
+                              'wc_available' : rest[3] - rest[5]})
         return restrooms
     
     def getPriorityListFromPlaceFilterGender(self, placeID, gender):
@@ -194,7 +189,7 @@ class Database(object):
             # `restroom`, `priority`, `people_count`, `wc_count`, `status`, `wc_closed_count`, `lat`, `long`, `name`, `gender`
             restrooms[rest[0]] = ({'id': rest[0], 'priority': rest[1], 'people_count': rest[2], 'wc_count': rest[3], 'status': rest[4],
                               'wc_closed_count': rest[5], 'lat': rest[6], 'long': rest[7], 'name': rest[8], 'gender': rest[9],
-                              'wc_available' : rest[3] - rest[5], 'status_str': statusCode[rest[4]]})
+                              'wc_available' : rest[3] - rest[5]})
         return restrooms
 
 

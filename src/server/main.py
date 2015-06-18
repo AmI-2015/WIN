@@ -8,7 +8,7 @@ from flask import Flask, render_template, abort, jsonify, request
 from flask_bootstrap import Bootstrap
 
 from database import DB
-from waiting_time import addWaitingTimeToRestroomDict
+from waiting_time import addInfoToRestroomDict, addStatusStrToRestroom
 
 app = Flask(__name__)
 Bootstrap(app)
@@ -35,7 +35,7 @@ def nearRestrooms(placeID):
     if place == None:
         abort(404) # Invalid place ID
     restroomDict = DB.getPriorityListFromPlace(placeID)
-    addWaitingTimeToRestroomDict(placeID, restroomDict)
+    addInfoToRestroomDict(placeID, restroomDict)
     return render_template('restroom.html', place=place, restrooms=restroomDict.values())'''
 
 @app.route('/place/<int:placeID>/<string:gender>/')
@@ -44,7 +44,7 @@ def nearRestroomsFilterGender(placeID, gender):
     if place == None:
         abort(404) # Invalid place ID
     restroomDict = DB.getPriorityListFromPlaceFilterGender(placeID, gender)
-    addWaitingTimeToRestroomDict(placeID, restroomDict)
+    addInfoToRestroomDict(placeID, restroomDict)
     return render_template('restroom.html', place=place, restrooms=restroomDict.values())
 
 @app.route('/updatestatus/<int:restroomId>/', methods=['POST'])
@@ -67,8 +67,9 @@ def nearRestroomsInsideOtherRestroom(restID):
     restroom = DB.getRestroomInfoByID(restID)
     if restroom == None:
         abort(404) # Invalid place ID
+    addStatusStrToRestroom(restroom, restroom['status'])
     restroomDict = DB.getPriorityListFromPlaceFilterGender(restID, restroom['gender'])
-    addWaitingTimeToRestroomDict(restID, restroomDict)
+    addInfoToRestroomDict(restID, restroomDict)
     return render_template('restroomInside.html', restroom=restroom, restrooms=restroomDict.values())
 
 @app.route('/about')

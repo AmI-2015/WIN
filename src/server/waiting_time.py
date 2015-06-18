@@ -6,6 +6,16 @@ Created on 07/giu/2015
 
 import random
 
+# Status codes
+statusCode = {
+    0: 'open',
+    1: 'closed',
+}
+
+# Status codes
+STATUS_OPEN = 0
+STATUS_CLOSED = 1
+
 def estimateWaitingTime(placeID, restrooms):
     waitingTimeRestrooms = []
     
@@ -43,14 +53,19 @@ def estimateWaitingTime(placeID, restrooms):
         waitingTimeRestrooms.append({'id' : restroom['id'], 'minuti' : minuti, 'secondi' : secondi})
     return waitingTimeRestrooms
 
-def addWaitingTimeToRestroomDict(placeID, restroomDict):                                                                                
+def addStatusStrToRestroom(entry, status):
+    entry['status_str'] = statusCode[status]
+
+def addInfoToRestroomDict(placeID, restroomDict):
     waitingTimes = estimateWaitingTime(placeID,restroomDict.values())
     for newinfo in waitingTimes:
-        restroomID = newinfo['id']
-        if(restroomDict[restroomID]['status_str']=='open'):
-            restroomDict[restroomID]['waiting_time'] = str(newinfo['minuti'])+":"+str(newinfo['secondi'])
-            restroomDict[restroomID]['people_on_wc_available'] = str(restroomDict[restroomID]['people_count'])+'/'+str(restroomDict[restroomID]['wc_available'])
+        entry = restroomDict[newinfo['id']]
+        status = entry['status']
+        addStatusStrToRestroom(entry, status)
+        if(status == STATUS_OPEN):
+            entry['waiting_time'] = str(newinfo['minuti'])+":"+str(newinfo['secondi'])
+            entry['people_on_wc_available'] = str(entry['people_count'])+'/'+str(entry['wc_available'])
         else:
-            restroomDict[restroomID]['waiting_time'] = '--'
-            restroomDict[restroomID]['people_on_wc_available'] = '--'
+            entry['waiting_time'] = '--'
+            entry['people_on_wc_available'] = '--'
 
