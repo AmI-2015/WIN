@@ -48,6 +48,4 @@ $(document).ready(function() {
 			setAllMap(map, markerF);
 		}
 	});
-	// Force change at page load
-	$("input[name='gender']").change();
 });

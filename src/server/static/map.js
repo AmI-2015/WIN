@@ -85,6 +85,9 @@ function initialize() {
 		overlay.setMap(map);
 	}
 
+	// Force marker update after map is loaded (only for index page)
+	if (typeof indexPage !== 'undefined')
+		$("input[name='gender']").change();
 }
 
 
