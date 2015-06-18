@@ -19,7 +19,9 @@ STATUS_CLOSED = 1
 
 @app.route('/')
 def index():
-    return render_template('index.html', types = DB.getPlaceTypes())
+    # Get a list of all restrooms, the priority order doesn't matter
+    defaultPlaceID = 1;
+    return render_template('index.html', types = DB.getPlaceTypes(), restrooms=DB.getPriorityListFromPlace(defaultPlaceID).values())
 
 @app.route('/placeType/<string:placeType>/')
 def placeType(placeType):

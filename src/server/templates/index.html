@@ -1,8 +1,19 @@
 {% extends 'layout.html' %}
 
+{% block head %}
+{{ super() }}
+<!-- Restroom data to be parsed. KEEP before map.js loading-->
+<script type="text/javascript">
+    var restrooms = {{ restrooms|tojson }};
+</script>
+
+<!-- Google Maps -->
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+<script src="{{ url_for('static', filename='mapindex.js') }}"></script>
+{% endblock %}
+
 
 {% block content %}
-
 <div class="container theme-showcase" role="main">
     
     <div class="jumbotron">
@@ -13,7 +24,7 @@
 
     <div class="row">
         
-        <form class="form-horizontal">
+        <form class="form-horizontal col-md-4">
             <fieldset>
 
             <!-- Form Name -->
@@ -21,7 +32,7 @@
 
             <!-- Gender Choice -->
             <div class="form-group">
-              <label class="col-md-4 control-label" for="gender">Gender</label>
+              <label class="col-md-6 control-label" for="gender">Gender</label>
               <div class="col-md-4">
                   <div class="radio">
                     <label for="gender-0">
@@ -41,7 +52,7 @@
             <!-- Select Type of Room -->
             <div class="form-group" id="typeRoomForm">
                 <label class="col-md-4 control-label" for="typeofroom">Type of Room</label>
-                <div class="col-md-4">
+                <div class="col-md-8">
                     <select id="typeofroom" name="typeofroom" class="form-control">
                         <option disabled="disabled" selected="selected">-- select an option --</option>
                         {% for type in types %}
@@ -54,7 +65,7 @@
             <!-- Select Room -->
             <div class="form-group" id="selectRoomForm">
               <label class="col-md-4 control-label" for="selectroom">Select Room</label>
-              <div class="col-md-4">
+              <div class="col-md-8">
                 <select id="selectroom" name="selectroom" class="form-control"></select>
               </div>
             </div>
@@ -69,6 +80,8 @@
 
             </fieldset>
         </form>
+        <div class="col-md-8" id="map-canvas">
+        </div>
     </div>
 </div>
 {% endblock %}

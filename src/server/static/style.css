@@ -8,7 +8,7 @@ body {
 }
     
 #map-canvas {
-    height: 400px;
+    height: 500px;
     margin-top: 20px;
 }
 
@@ -18,4 +18,9 @@ body {
 
 div#selectRoomForm, div#findForm {
     display: none;
+}
+
+.jumbotron {
+	padding-top: 20px;
+	padding-bottom: 20px;
 }
