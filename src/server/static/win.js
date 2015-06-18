@@ -4,7 +4,7 @@ $(document).ready(function() {
 	});
 
 	$("#typeofroom").change(function() {
-        $("#selectRoomForm").css("display", "block");
+		$("#selectRoomForm").css("display", "block");
 		$.getJSON("/placeType/"+ $("#typeofroom").val(), function(result) {
 			var select = $("#selectroom");
 			select.empty();
@@ -21,19 +21,18 @@ $(document).ready(function() {
 			window.location = "/place/" + $("#selectroom").val() + "/" + $("input[name='gender']:checked").val() + "/";
 		}
 	});
-    
-    $("#selectroom").change(function() {
-        $("#findForm").css("display", "block");
-    });
-    
-    /* add class 'active' to nav item */
-    if (location.pathname.substring(1) == "index") {
-        $(".navbar-nav li:nth-child(1)").addClass("active");
-    } else if (location.pathname.substring(1) == "about") {
-        $(".navbar-nav li:nth-child(2)").addClass("active");
-    } else if (location.pathname.substring(1) == "contact") {
-        $(".navbar-nav li:nth-child(3)").addClass("active");
-    }
+
+	$("#selectroom").change(function() {
+		$("#findForm").css("display", "block");
+	});
+
+	/* add class 'active' to nav item */
+	if (location.pathname.substring(1) == "index") {
+		$(".navbar-nav li:nth-child(1)").addClass("active");
+	} else if (location.pathname.substring(1) == "about") {
+		$(".navbar-nav li:nth-child(2)").addClass("active");
+	} else if (location.pathname.substring(1) == "contact") {
+		$(".navbar-nav li:nth-child(3)").addClass("active");
+	}
 
 });
-
