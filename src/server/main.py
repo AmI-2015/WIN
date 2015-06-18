@@ -56,11 +56,20 @@ def switchControl(restroomId):
     status = data['status']
     if status == STATUS_CLOSED or status == STATUS_OPEN:
         DB.updateRestroomStatus(restroomId, status)
-	DB.updateRestroomPeopleCount(restroomId, 0)
+        DB.updateRestroomPeopleCount(restroomId, 0)
     else:
         abort(400) # BAD_REQUEST
     # Send a response back for confirmation
     return 'Updated restroom %s status: %s' % (restroomId, status)
+
+@app.route('/monitorRestroom/<int:restID>/')
+def nearRestroomsInsideOtherRestroom(restID):
+    restroom = DB.getRestroomInfoByID(restID)
+    if restroom == None:
+        abort(404) # Invalid place ID
+    restroomDict = DB.getPriorityListFromPlaceFilterGender(restID, restroom['gender'])
+    addWaitingTimeToRestroomDict(restID, restroomDict)
+    return render_template('restroomInside.html', restroom=restroom, restrooms=restroomDict.values())
 
 @app.route('/about')
 def about():
