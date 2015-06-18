@@ -35,4 +35,19 @@ $(document).ready(function() {
 		$(".navbar-nav li:nth-child(3)").addClass("active");
 	}
 
+	// Add checkbox event handler for map markers
+	$("input[name='gender']").change(function() {
+		var checked = $("input[name='gender']:checked").val();
+		// Clear markers
+		if (checked == 'M') {
+			setAllMap(null, markerF);
+			setAllMap(map, markerM);
+		}
+		else {
+			setAllMap(null, markerM);
+			setAllMap(map, markerF);
+		}
+	});
+	// Force change at page load
+	$("input[name='gender']").change();
 });

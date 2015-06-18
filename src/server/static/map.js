@@ -1,17 +1,28 @@
+// Global variables
+var map;
+var markerM = [];
+var markerF = [];
+
+//Sets the map on all markers in the array.
+function setAllMap(map, markers) {
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(map);
+  }
+}
+
 function initialize() {
 	var nearest;
 	var zoom;
-	if (typeof indexPage === 'undefined')
-	{
+
+	// If on index page
+	if (typeof indexPage !== 'undefined') {
 		//set the center of the map to the middle of Politecnico
+		nearest = new google.maps.LatLng(45.06335, 7.6615);
+		zoom = 17;
+	} else {
+		// coordinate of nearest restroom  **selected by user**
 		nearest = new google.maps.LatLng(restrooms[0].lat, restrooms[0].long);
 		zoom = 18;
-	}
-	else // if (indexPage == true)
-	{
-		// coordinate of nearest restroom  **selected by user**
-		nearest = new google.maps.LatLng(45.06335, 7.660734);
-		zoom = 17;
 	}
 
 	//set the center of the map to the nearest restroom
@@ -20,9 +31,7 @@ function initialize() {
 			center: nearest
 	};
 
-	var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-	var marker =[];
-	var infowindow =[];
+	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
 	function markerCallback(marker,content,infowindow) {
 		return function() {
@@ -34,6 +43,8 @@ function initialize() {
 	for (i = 0; i < restrooms.length; i++) {
 		//position
 		tempPosition = new google.maps.LatLng(restrooms[i].lat, restrooms[i].long);
+		// gender
+		var gender = restrooms[i].gender.toLowerCase();
 		//set the color of markers
 		if (restrooms[i].wc_available > restrooms[i].people_count && restrooms[i].status === 0)
 			color = 'g';
@@ -41,7 +52,7 @@ function initialize() {
 			color = 'y';
 		else
 			color = 'r';
-		var image = '/static/images/' + restrooms[i].gender.toLowerCase() + color + ".png";
+		var image = '/static/images/' + gender + color + ".png";
 
 		//create marker
 		marker = new google.maps.Marker({
@@ -51,6 +62,11 @@ function initialize() {
 			icon: image
 		});
 
+		if (gender == 'm')
+			markerM.push(marker);
+		else
+			markerF.push(marker);
+
 		//create content window
 		var contentString = restrooms[i].name + "<br>Toilets: " + (restrooms[i].wc_count - restrooms[i].wc_closed_count) +
 		"<br>People: " + restrooms[i].people_count + "<br>Status: " + restrooms[i].status_str;
@@ -58,7 +74,6 @@ function initialize() {
 
 		//create event in order to show info window
 		google.maps.event.addListener(marker,'click', markerCallback(marker,contentString,infowindow));
-
 
 		// add hallway overlay
 		var imageBounds = new google.maps.LatLngBounds(
@@ -71,4 +86,6 @@ function initialize() {
 	}
 
 }
+
+
 google.maps.event.addDomListener(window, 'load', initialize);

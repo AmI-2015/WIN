@@ -7,10 +7,6 @@
     var restrooms = {{ restrooms|tojson }};
     var indexPage = true;
 </script>
-
-<!-- Google Maps -->
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
-<script src="{{ url_for('static', filename='map.js') }}"></script>
 {% endblock %}
 
 
@@ -92,5 +88,7 @@
 
 <!-- Page scripts -->
 <script src="{{ url_for('static', filename='win.js') }}" type="text/javascript"></script>
-
+<!-- Google Maps -->
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+<script src="{{ url_for('static', filename='map.js') }}"></script>
 {% endblock %}

@@ -7,11 +7,6 @@
 <script type="text/javascript">
     var restrooms = {{ restrooms|tojson }};
 </script>
-
-<!-- Google Maps -->
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
-<script src="{{ url_for('static', filename='map.js') }}"></script>
-        
 {% endblock %}
 
 
@@ -41,7 +36,10 @@
     </table>
     <div id="map-canvas"></div>
 </div>
+{% endblock %}
 
-
-
+{% block scripts %}
+<!-- Google Maps -->
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+<script src="{{ url_for('static', filename='map.js') }}"></script>
 {% endblock %}
