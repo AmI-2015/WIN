@@ -5,11 +5,12 @@
 <!-- Restroom data to be parsed. KEEP before map.js loading-->
 <script type="text/javascript">
     var restrooms = {{ restrooms|tojson }};
+    var indexPage = true;
 </script>
 
 <!-- Google Maps -->
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
-<script src="{{ url_for('static', filename='mapindex.js') }}"></script>
+<script src="{{ url_for('static', filename='map.js') }}"></script>
 {% endblock %}
 
 

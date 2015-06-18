@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	$("#typeofroom").load(function() {
-		$("#typeofroom").change()
+		$("#typeofroom").change();
 	});
 
 	$("#typeofroom").change(function() {
