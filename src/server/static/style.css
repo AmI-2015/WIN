@@ -1,26 +1,105 @@
-html {
+/****************************
+**********GENERAL************
+****************************/
+
+html, body {
     height: 100%;
 }
 
 body {
-    height: 100%;
-    padding-top: 60px;
-}
-    
-#map-canvas {
-    height: 500px;
-    margin-top: 20px;
-}
-
-#content {
-	height: auto;
+    padding-top: 50px;
 }
 
 div#selectRoomForm, div#findForm {
     display: none;
 }
 
-.jumbotron {
-	padding-top: 20px;
-	padding-bottom: 20px;
+#content {
+	height: auto;
+}
+
+
+/****************************
+************NAV**************
+****************************/
+
+nav.navbar-inverse {
+    background-color: #012b5b;
+    background-image: none;
+    border-bottom-color: #fff;
+    color: #fff;
+}
+
+nav.navbar-inverse .navbar-brand,
+nav.navbar-inverse .navbar-nav > li > a {
+  color: #fff;
+}
+
+nav.navbar-inverse .navbar-brand:hover,
+nav.navbar-inverse .navbar-brand:focus,
+nav.navbar-inverse .navbar-nav > li > a:hover,
+nav.navbar-inverse .navbar-nav > li > a:focus {
+  color: #61a3d2;
+  background-color: transparent;
+}
+
+nav.navbar-inverse .navbar-nav > .active > a,
+nav.navbar-inverse .navbar-nav > .active > a:hover,
+nav.navbar-inverse .navbar-nav > .active > a:focus {
+  color: #fff;
+  background-color: #3b76cf;
+}
+
+/****************************
+**********HIGHLIGHT**********
+****************************/
+
+div.highlight-content {
+    background-color: #fff;
+    background-image: url(bg-blue-gradient.jpg);
+    border-bottom: 1px solid #dceff6;
+    color: #fff;
+    margin-bottom: 15px;
+    padding-bottom: 20px;
+}
+
+div.highlight-content .jumbotron {
+    background-color: transparent;
+}
+
+/****************************
+************MAIN*************
+****************************/
+
+div.main-content {
+    margin-top: 15px;
+}
+
+div#map-canvas {
+    border: 1px solid #2a2a2a;
+    height: 500px;
+    margin: 20px;
+    width: auto;
+}
+
+/****************************
+***********FOOTER************
+****************************/
+
+div.footer-bar {
+    background-color: #011833;
+    color: #fff;
+    margin-bottom: 0;
+    margin-top: 20px;
+    padding: 20px 0 10px;
+}
+
+div.footer-bar a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+div.footer-bar a:hover,
+div.footer-bar a:focus {
+    color: #61a3d2;
 }
