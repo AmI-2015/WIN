@@ -47,6 +47,7 @@ CREATE TABLE `restroom` (
   `wc_closed_count` int(11) DEFAULT 0,
   `lat` double NOT NULL,
   `long` double NOT NULL,
+  `waiting_time` char(6) NOT NULL DEFAULT '00:00'
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

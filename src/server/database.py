@@ -21,6 +21,7 @@ stmt_placeTypeList = "SELECT DISTINCT `type` FROM `place` WHERE `type` <> 'Restr
 stmt_restroomID = "SELECT R.`id`, `people_count`, `wc_count`, `status`, `wc_closed_count`, `gender`, `name`, `type` FROM `restroom` R, `place` P WHERE R.`id` = %s AND R.`id` = P.`id`"
 stmt_restroomUpdatePeopleCount = "UPDATE `restroom` SET `people_count` = %s WHERE `id` = %s"
 stmt_restroomUpdateStatus = "UPDATE `restroom` SET `status` = %s WHERE `id` = %s"
+stmt_restroomUpdateWaitingTime = "UPDATE `restroom` SET `waiting_time` = %s WHERE `id` = %s"
 
 stmt_distanceRestroomList = "SELECT `restroom`, `priority`, `people_count`, `wc_count`, `status`, `wc_closed_count`, `lat`, `long`, `name`, `gender` \
                             FROM `distance`, `restroom` R, `place` P WHERE `place` = %s AND `restroom` = R.`id` AND R.`id` = P.`id` ORDER BY `priority` ASC"
@@ -151,6 +152,13 @@ class Database(object):
         cur = self.query(stmt_restroomUpdateStatus, (status, restroomID))
         cur.close()
 
+    def updateWaitingTimeRestroom(self, restroomID, waitingTime):
+        if(isinstance(restroomID, int) == False):
+            raise TypeError("restroomID must be of int type")
+        
+        cur = self.query(stmt_restroomUpdateWaitingTime, (waitingTime,restroomID))
+        cur.close()
+        
     """
     Distance queries
     """

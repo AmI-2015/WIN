@@ -2,12 +2,14 @@
 
 from bs4 import BeautifulSoup
 from database import DB
+from waiting_time import updateWaitingTime
 import time
 
 address = "http://IP:30003/gateflow.cgi?action=total&id=6&direction=DIRECTION&begin=BEGIN&end=END&fromReset=value"
 #addressTest = '<total><item total="34" direction="IN" id="0" /><item total="117" direction="OUT" id="0" /></total>'
 
 def main():
+    restID=28
     while(True):
         markup = BeautifulSoup(open(address), "xml")
         #markup = BeautifulSoup(addressTest, "xml")
@@ -24,7 +26,8 @@ def main():
         
         peopleIN = inCount - outCount
         
-        DB.updateRestroomPeopleCount(6, peopleIN)
+        DB.updateRestroomPeopleCount(restID, peopleIN)
+        updateWaitingTime(restID,peopleIN)
         
         time.sleep(5)
 

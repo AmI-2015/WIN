@@ -8,7 +8,7 @@ from flask import Flask, render_template, abort, jsonify, request
 from flask_bootstrap import Bootstrap
 
 from database import DB
-from waiting_time import addInfoToRestroomDict, addStatusStrToRestroom
+from waiting_time import addInfoToRestroomDict, addStatusStrToRestroom, updateWaitingTime
 
 app = Flask(__name__)
 Bootstrap(app)
@@ -46,7 +46,7 @@ def nearRestroomsFilterGender(placeID, gender):
     if place == None:
         abort(404) # Invalid place ID
     restroomDict = DB.getPriorityListFromPlaceFilterGender(placeID, gender)
-    addInfoToRestroomDict(placeID, restroomDict)
+    addInfoToRestroomDict(restroomDict)
     return render_template('restroom.html', place=place, restrooms=restroomDict.values())
 
 @app.route('/updatestatus/<int:restroomId>/', methods=['POST'])
@@ -56,9 +56,14 @@ def switchControl(restroomId):
     # get the request body
     data = request.json
     status = data['status']
-    if status == STATUS_CLOSED or status == STATUS_OPEN:
+    if status == STATUS_CLOSED:
         DB.updateRestroomStatus(restroomId, status)
         DB.updateRestroomPeopleCount(restroomId, 0)
+        updateWaitingTime(restroomId,-1)
+    elif status == STATUS_OPEN:
+        DB.updateRestroomStatus(restroomId, status)
+        DB.updateRestroomPeopleCount(restroomId, 0)
+        updateWaitingTime(restroomId, 0)
     else:
         abort(400) # BAD_REQUEST
     # Send a response back for confirmation
@@ -71,7 +76,7 @@ def nearRestroomsInsideOtherRestroom(restID):
         abort(404) # Invalid place ID
     addStatusStrToRestroom(restroom, restroom['status'])
     restroomDict = DB.getPriorityListFromPlaceFilterGender(restID, restroom['gender'])
-    addInfoToRestroomDict(restID, restroomDict)
+    addInfoToRestroomDict(restroomDict)
     return render_template('restroomInside.html', restroom=restroom, restrooms=restroomDict.values())
 
 @app.route('/about')
