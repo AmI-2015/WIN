@@ -38,6 +38,10 @@
 </div>
 {% endblock %}
 
+{% block footer %}
+{{ super() }}
+{% endblock %}
+
 {% block scripts %}
 <!-- Google Maps -->
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
