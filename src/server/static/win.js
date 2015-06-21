@@ -26,15 +26,6 @@ $(document).ready(function() {
 		$("#findForm").css("display", "block");
 	});
 
-	/* add class 'active' to nav item */
-	if (location.pathname.substring(1) == "index") {
-		$(".navbar-nav li:nth-child(1)").addClass("active");
-	} else if (location.pathname.substring(1) == "about") {
-		$(".navbar-nav li:nth-child(2)").addClass("active");
-	} else if (location.pathname.substring(1) == "contact") {
-		$(".navbar-nav li:nth-child(3)").addClass("active");
-	}
-
 	// Add checkbox event handler for map markers
 	$("input[name='gender']").change(function() {
 		var checked = $("input[name='gender']:checked").val();
@@ -48,4 +39,16 @@ $(document).ready(function() {
 			setAllMap(map, markerF);
 		}
 	});
+});
+
+/* add class 'active' to nav item */
+$(document).ready(function() {
+    var path = location.pathname; 
+	if (path == "/") {
+		$(".navbar-nav li:nth-child(1)").addClass("active");
+	} 
+    if (path == "/about") {
+		$(".navbar-nav li:nth-child(2)").addClass("active");
+	} 
+    
 });
