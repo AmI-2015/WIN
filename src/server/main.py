@@ -1,7 +1,6 @@
 '''
-Created on 20/apr/2015
-
-@author: luca
+This is the main page that runs the server.
+You have to install Flask and Flask Bootstrap.
 '''
 
 from flask import Flask, render_template, abort, jsonify, request

@@ -1,7 +1,6 @@
 '''
-Created on 21/mag/2015
-
-@author: Simon Mezzomo
+In this file there are the functions to communicate with the database.
+You have to install MySQL and Flask-MySQL.
 '''
 
 import os

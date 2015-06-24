@@ -1,4 +1,7 @@
-#Install BeautifulSoup and lxml
+'''
+This is the parser for information provided by the video server.
+You have to install BeautifulSoup and lxml.
+'''
 
 from bs4 import BeautifulSoup
 from database import DB

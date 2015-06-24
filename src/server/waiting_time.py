@@ -1,7 +1,5 @@
 '''
-Created on 07/giu/2015
-
-@author: luca
+In this file there are the functions for calculating the waiting time.
 '''
 
 import random
