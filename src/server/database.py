@@ -25,7 +25,7 @@ stmt_restroomUpdateWaitingTime = "UPDATE `restroom` SET `waiting_time` = %s WHER
 
 stmt_distanceRestroomList = "SELECT `restroom`, `priority`, `people_count`, `wc_count`, `status`, `wc_closed_count`, `lat`, `long`, `name`, `gender` \
                             FROM `distance`, `restroom` R, `place` P WHERE `place` = %s AND `restroom` = R.`id` AND R.`id` = P.`id` ORDER BY `priority` ASC"
-stmt_distanceRestroomListFilterGender = "SELECT `restroom`, `priority`, `people_count`, `wc_count`, `status`, `wc_closed_count`, `lat`, `long`, `name`, `gender` \
+stmt_distanceRestroomListFilterGender = "SELECT `restroom`, `priority`, `people_count`, `wc_count`, `status`, `wc_closed_count`, `lat`, `long`, `name`, `gender`, `waiting_time` \
                             FROM `distance`, `restroom` R, `place` P WHERE `place` = %s AND `gender` = %s AND `restroom` = R.`id` AND R.`id` = P.`id` ORDER BY `priority` ASC"
 
 
@@ -197,7 +197,7 @@ class Database(object):
             # `restroom`, `priority`, `people_count`, `wc_count`, `status`, `wc_closed_count`, `lat`, `long`, `name`, `gender`
             restrooms[rest[0]] = ({'id': rest[0], 'priority': rest[1], 'people_count': rest[2], 'wc_count': rest[3], 'status': rest[4],
                               'wc_closed_count': rest[5], 'lat': rest[6], 'long': rest[7], 'name': rest[8], 'gender': rest[9],
-                              'wc_available' : rest[3] - rest[5]})
+                              'wc_available' : rest[3] - rest[5], 'waiting_time' : rest[10]})
         return restrooms
 
 
