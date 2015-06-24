@@ -515,4 +515,3 @@ INSERT INTO `distance` (`restroom`, `place`, `priority`) VALUES
 (36,39,2),
 (37,39,2),
 (38,39,1);
-
