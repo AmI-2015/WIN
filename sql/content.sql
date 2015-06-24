@@ -1,0 +1,11 @@
+UPDATE `restroom` SET `people_count`=0, `status`=1 WHERE `id`=29;
+UPDATE `restroom` SET `people_count`=3 WHERE `id`=30;
+UPDATE `restroom` SET `people_count`=2 WHERE `id`=31;
+UPDATE `restroom` SET `people_count`=0, `status`=1 WHERE `id`=32;
+UPDATE `restroom` SET `people_count`=1 WHERE `id`=33;
+UPDATE `restroom` SET `people_count`=4 WHERE `id`=34;
+UPDATE `restroom` SET `people_count`=2 WHERE `id`=35;
+UPDATE `restroom` SET `people_count`=0, `status`=1 WHERE `id`=36;
+UPDATE `restroom` SET `people_count`=0 WHERE `id`=37;
+UPDATE `restroom` SET `people_count`=4 WHERE `id`=38;
+UPDATE `restroom` SET `people_count`=0 WHERE `id`=39;
