@@ -1,0 +1,7 @@
+# Before running the server for the first time,
+# copy this file to 'db.cfg' and edit it with your settings
+[Database]
+user = root
+password = password
+host = 127.0.0.1
+database = win

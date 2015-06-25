@@ -1,0 +1,59 @@
+<!-- Page for showing information about restrooms-->
+
+{% extends 'layout.html' %}
+
+{% block head %}
+{{ super() }}
+
+<!-- Restroom data to be parsed. KEEP before map.js loading-->
+<script type="text/javascript">
+    var restrooms = {{ restrooms|tojson }};
+</script>
+{% endblock %}
+
+
+{% block content %}
+<div class="container theme-showcase" role="main">
+    
+	<h1>{{ place.type + ' - ' + place.name }}</h1>
+    
+	<table class="table table-striped">
+        <thead>
+            <th>Restroom Name</th>
+            <th>People / Available WC</th>
+            <th>Status</th>
+            <th>Expected Waiting Time (mm:ss)</th>
+        </thead>
+        <tbody>
+           {% for restroom in restrooms %}
+           <!-- List restrooms by priority (distance) and also compute free wc -->
+           <tr>
+               <td>{{ restroom.name }}</td>
+               <td>{{ restroom.people_on_wc_available }}</td>
+               <td>{{ restroom.status_str }}</td>
+               <td>{{ restroom.waiting_time }}</td>
+           </tr>
+           {% endfor %}
+        </tbody>
+    </table>
+    <div id="map-canvas"></div>
+</div>
+
+<div class="footer-bar">
+    <div class="container">
+        <div class="col-md-4">
+            <p>Copyright &copy; 2015 WIN :: Wc INformation</p>
+        </div>
+        <div class="col-md-3 col-md-offset-5">
+            <p>Visit our project on <a href="http://ami-2015.github.io/WIN/">GitHub</a></p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<!-- Google Maps -->
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+<script src="{{ url_for('static', filename='map.js') }}"></script>
+{% endblock %}

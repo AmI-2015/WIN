@@ -1,0 +1,61 @@
+<!-- Page for showing information about restrooms on monitors-->
+
+{% extends 'bootstrap/base.html' %}
+
+{% block head %}
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<script type="text/javascript">
+    var restrooms = {{ restrooms|tojson }};
+</script>
+
+<title>{{ restroom.type + ": " + restroom.name }}</title>
+
+<!-- Bootstrap -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css" />
+
+<!-- Custom CSS --> 
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css" />
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+<script src="{{ url_for('static', filename='map.js') }}"></script>
+{% endblock %}
+
+
+{% block content %}
+<div class="container theme-showcase" role="main">
+    <h1 align="center">{{ restroom.name + " is " + restroom.status_str }}</h1>
+	<h2>Other restrooms near here:</h2>
+    
+	<table class="table table-striped">
+        <thead>
+            <th>Restroom Name</th>
+            <th>People / Available WC</th>
+            <th>Status</th>
+            <th>Expected Waiting Time (mm:ss)</th>
+        </thead>
+        <tbody>
+           {% for r in restrooms %}
+           <!-- List restrooms by priority (distance) and also compute free wc -->
+          <tr>
+               <td>{{ r.name }}</td>
+               <td>{{ r.people_on_wc_available }}</td>
+               <td>{{ r.status_str }}</td>
+               <td>{{ r.waiting_time }}</td>
+           </tr>
+           {% endfor %}
+        </tbody>
+    </table>
+    <div id="map-canvas"></div>
+</div>
+{% endblock %}

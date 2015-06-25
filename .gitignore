@@ -1,0 +1,9 @@
+*~
+*.pyc
+*.cfg
+
+.metadata
+.project
+.pydevproject
+.metadata/
+.settings/
