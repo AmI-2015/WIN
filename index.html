@@ -549,7 +549,7 @@
                                 </tr>
                                 <tr>
                                 	<td>Adaptive</td>
-                                    <td>The system is able to adapt to the context (number of people, out of service toilets, closed toilets).</td>
+                                    <td>The system is able to adapt to the context (number of people, closed restrooms).</td>
                                 </tr>
                                 <tr>
                                 	<td>Transparent</td>
@@ -607,8 +607,6 @@
                             		<dd>a WC inside a Restroom.</dd>
                                 <dt>Opened/Closed</dt>
                                     <dd>States if the whole restroom is available to users or not</dd>
-                                <dt>In/Not in service</dt>
-                                    <dd>States if a single toilet is available to users or not</dd>
                                 <dt>Point of interest</dt>
                                     <dd>A specific location inside Politecnico (e.g. classrooms, bars) well known by users.</dd>
 
@@ -628,7 +626,6 @@
                             
                             <ol>
                             	<li>The user must be able to know whether the restroom is opened or closed. (2)*</li>
-                            	<li>The user must be able to know whether the toilet is in service or not. (4)*</li>
                             </ol>
                             
                             <h4><em>Area 3:</em> User Interface</h4>
@@ -638,7 +635,7 @@
 </li>
                                 <li>The user must choose a sex to filter available restrooms. (1)*</li>
                                 <li>Each restroom must provide information to users about its status. (2)*</li>
-                                <li>Each restroom should provide information to users about the closest restrooms. (5)*</li>
+                                <li>Each restroom should provide information to users about the closest restrooms. (3)*</li>
                             </ol>
                             
                             <h4><em>Area 4:</em> Cleaning staff interaction</h4>
@@ -665,7 +662,7 @@
         		    		from any device provided with Internet connectivity (e.g. laptop, smartphone).</li>
         		    	<li>The web interface will be compatible with browsers IE9+, Firefox 30+, Safari 6+, Chrome 34+, Opera 20+.</li>
         		    	<li>The web interface will be responsive, and will adapt to screen resolutions from 480x320 to 1920x1080.</li>
-        		    	<li>The system will be localized in many languages (default: English).</li>
+        		    	<li>The system is available in English language</li>
         		    	<li>The system should work, in reduced conditions, even if the local system of a restroom breaks.</li>
                         <li>Data computed by the system must be stored persistently.</li>
         		    	<li>The system guarantees user privacy.</li>
@@ -731,7 +728,7 @@
                                         <li>one lighting system outside each restroom. </li>
                                     </ul>
                                 </li> 
-                                <li>witch that allows the cleaning staff to set the availability of a specific restroom:
+                                <li>Switch that allows the cleaning staff to set the availability of a specific restroom:
                                     <ul>
                                         <li>one inside each restroom.</li>
                                     </ul>
@@ -746,7 +743,7 @@
                                         <li>Processes and sends data to central server (FR 5.1, FR 5.2).</li>
                                     </ul>
                                 </li>
-                                <li>Software for counting how many people are in the restroom (on local gateway) (FR 5.1)</li>
+                                <li>Software for counting how many people are in the restroom (on central server) (FR 5.1)</li>
                                 <li>Web Application (on central server):
                                     <ul>
                                         <li>Provides the user information about restrooms. (FR 1.1)</li>
@@ -772,7 +769,8 @@
                             <ul>
                                 <li>Local gateway (Raspberry Pi) in each restroom, connected via LAN to the Internet.</li>
                                 <li>Central server: world-accessible public IP address.</li>
-                                <li>Video camera and switch connected to the local gateway via LAN.</li>
+								<li>Video camera connected to the Internet.</li>
+                                <li>Switch connected to the local gateway via wires.</li>
                                 <li>Monitors connected to local gateway.</li>
                             </ul>
 
@@ -785,7 +783,7 @@
                                     <li>Raspberry Pi board</li>
                                     <li>Video camera</li>
                                     <li>Monitor (size from 15’ to 24’)</li>
-                                    <li>Color-changing lighting system (Philips Hue)</li>
+                                    <li>Color-changing lighting system (two Leds)</li>
                                     <li>Switch for cleaning staff</li>
                                 </ul>
 
