@@ -103,3 +103,13 @@ div.footer-bar a:hover,
 div.footer-bar a:focus {
     color: #61a3d2;
 }
+
+/****************************
+*********RESPONSIVE**********
+****************************/
+
+@media (max-width: 767px) {
+  .row {
+    padding: 5px 20px;
+  }
+}
