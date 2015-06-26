@@ -1,7 +1,5 @@
 '''
-Created on 28/mag/2015
-
-@author: luca
+These functions, working with Raspberry Pi, allows to set the restroom status (open/closed)
 '''
 
 import RPi.GPIO as GPIO
@@ -25,8 +23,7 @@ STATUS_RED = 3
 
 restroomId = 28  # Restroom near class 12 'M'
 
-# host = 'localhost:5000'
-host = 'simlt.pythonanywhere.com'
+host = 'localhost:5000'
 updateUrl = 'http://' + host + '/updatestatus/' + str(restroomId) + '/'
 getdataUrl = 'http://' + host + '/restroom/' + str(restroomId) + '/'
 headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
