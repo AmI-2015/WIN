@@ -19,11 +19,11 @@ def main():
         
         itemIN = items[0]
         inCount = itemIN['Total']
-        print "IN %s" %(inCount)
+        #print "IN %s" %(inCount)
         
         itemOUT = items[1]
         outCount = itemOUT['Total']
-        print "OUT %s" %(outCount)
+        #print "OUT %s" %(outCount)
         
         peopleIN = int(inCount) - int(outCount)
         
