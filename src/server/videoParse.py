@@ -1,12 +1,12 @@
 '''
 This is the parser for information provided by the video server.
-You have to install BeautifulSoup and lxml.
+You have to install Untangle.
 '''
 
-from bs4 import BeautifulSoup
 from database import DB
 from waiting_time import updateWaitingTime
 import time
+import untangle
 
 address = "http://IP:30003/gateflow.cgi?action=total&id=6&direction=DIRECTION&begin=BEGIN&end=END&fromReset=value"
 #addressTest = '<total><item total="34" direction="IN" id="0" /><item total="117" direction="OUT" id="0" /></total>'
@@ -14,20 +14,18 @@ address = "http://IP:30003/gateflow.cgi?action=total&id=6&direction=DIRECTION&be
 def main():
     restID=28
     while(True):
-        markup = BeautifulSoup(open(address), "xml")
-        #markup = BeautifulSoup(addressTest, "xml")
+        markup = untangle.parse(address)
+        items = markup.Total.Item
         
-        items = markup.find_all('item')
+        itemIN = items[0]
+        inCount = itemIN['Total']
+        print "IN %s" %(inCount)
         
-        for item in items:
-            if item['direction'] == "IN":
-                inCount = item['total']
-                print "IN %s" %(inCount)
-            else:
-                outCount = item['total']
-                print "OUT %s" %(outCount)
+        itemOUT = items[1]
+        outCount = itemOUT['Total']
+        print "OUT %s" %(outCount)
         
-        peopleIN = inCount - outCount
+        peopleIN = int(inCount) - int(outCount)
         
         DB.updateRestroomPeopleCount(restID, peopleIN)
         updateWaitingTime(restID,peopleIN)
